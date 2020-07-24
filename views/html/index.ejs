@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-  	<meta name="description" content="A free chat platform for socializing and finding new friends anonimously">
-  	<meta name="keywords" content="friends, chat">
-  	<meta name="author" content="Baesu Rares">
-  	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link  type = 'text/css' rel ='stylesheet' href = 'css/style.css'/>
+	<%- include('../pieces/head-content.ejs') %>
+	<link  type = 'text/css' rel ='stylesheet' href = 'css/home-style.css'/>
 	<script type ='text/javascript' src = '/js/home.js'> </script>
 </head>
 <body>
@@ -24,47 +20,55 @@
 			<span class ='letter secondHalf'>p</span>
 		</div>
 	</div>
+	<div id = 'bigWrapper'>
+		<%-include('../pieces/menu.ejs') %>
 
-	<p class ='caption'> The oportunity to find new friends at your fingertips ! </p>
+		<p class ='caption'> The oportunity to find new friends at your fingertips ! </p>
 
-	<div class = 'flex'>
-		<div style='background-color:#aff0c0'>
-			<div class = 'textWrap'>
-				<p> Who are we ? </p>
-				<p> A bunch of creative and energetic guys. </p>
+		<p class = 'caption' id = 'quote'> </p>
+
+		<div class = 'flex'>
+			<div style='background-color:#aff0c0'>
+				<div class = 'textWrap'>
+					<p> Who are we ? </p>
+					<p> A bunch of creative and energetic guys. </p>
+				</div>
 			</div>
-		</div>
-		<div>
-			<img src = '/img/csstudent.jpg'/>
-		</div>
-
-
-
-		<div>
-			<img src = '/img/sad.jpg' />
-		</div>
-		<div style='background-color:#66b8ff'>
-			<div class = 'textWrap'>
-				<p> What do we want ? </p>
-				<p> In a world where we are connected more than ever before, we are also lonelier (paradoxically). Social anxiety is all around us and we want to make a change, so we came up with this idea. We want to make people happy by finding new friends and by socializing. </p>
+			<div>
+				<img src = '/img/csstudent.jpg'/>
 			</div>
-		</div>
 
-		<div style='background-color:#ede264'>
-			<div class = 'textWrap'>
-				<p> How are we going to achieve it ? </p>
-				<p> We created this platform to help people with social anxiety to find other people with similar interests and overcome their dificulties when it comes to social interaction.</p>
+			<div>
+				<img src = '/img/sad.jpg' />
 			</div>
-		</div>
-		<div>
-			<img src = '/img/lonely.jpg'/>
+			<div style='background-color:#66b8ff'>
+				<div class = 'textWrap'>
+					<p> What do we want ? </p>
+					<p> In a world where we are connected more than ever before, we are also lonelier (paradoxically). Social anxiety is all around us and we want to make a change, so we came up with this idea. We want to make people happy by finding new friends and by socializing. </p>
+				</div>
+			</div>
+
+			<div style='background-color:#ede264'>
+				<div class = 'textWrap'>
+					<p> How are we going to achieve it ? </p>
+					<p> We created this platform to help people with social anxiety to find other people with similar interests and overcome their dificulties when it comes to social interaction.</p>
+				</div>
+			</div>
+			<div>
+				<img src = '/img/lonely.jpg'/>
+			</div>
+
+			<div style ='background-color:tomato;height:500px;'>
+				  <div class ='textWrap' >
+				  	<p> So what do you have to do ? </p>
+				  	<a href ="javascript:void(0)"><button class = 'joinButton'> Click here to join us ! </button></a>
+				  	<p class = 'small'> It's all free ! </p>
+				  </div>
+			</div>
+			
 		</div>
 	</div>
-
-	<p class = 'caption'> So what do you have to do ? </p>
-	<button class = ''> </button>
-	<footer>
-		Just some content to add later
-	</footer>
+	
+	<%- include('../pieces/footer.ejs') %>
 </body>
 </html

@@ -17,9 +17,13 @@ app.use(session({
 	saveUninitialized: false
 }));
 
-app.get("/", (req, res) => {
-	res.render("html/index");
-})
+app.get('/', (req, res) => {
+	res.render('html/index');
+});
+
+app.get('/*', (req, res) => {
+	res.render('html' + req.url);
+});
 
 
 app.listen(process.env.PORT || 3000, () => {console.log("App running on port 3000")});

@@ -1,3 +1,11 @@
+/*importing other css files to avoid duplicate/spaghetti code*/
+
+
+@import "scrollbar.css";
+@import "menu.css";
+@import "footer.css";
+
+
 * {
 	margin:0;
 	padding:0;
@@ -9,6 +17,9 @@
 body, html {
   height: 100%;
 }
+
+
+/* Banner style for animation */
 
 div.banner {
   transition: 3s all linear;
@@ -46,20 +57,38 @@ span.secondHalf {
 }
 
 
+
+
+/* Keyframes for the animation */
+
+
+@keyframes firstHalfAnimation {
+	from{left:1500px;transform:rotate(0deg);}
+	to{left:0px;transform:rotate(-360deg);}
+}
+@keyframes secondHalfAnimation {
+	from{right:1500px;transform:rotate(0deg);}
+	to{right:0px;transform:rotate(360deg);}
+}
+
+
+
+
+
+/* FlexBox styling */
+
+
 div.flex {
   margin-top:100px;
   display: flex;
   flex-direction:row;
   flex-wrap: wrap;
-  flex-basis:50%;
   background-color:#f7f7f7;
-
 }
 
 div.flex > div {
 	position:relative;
 	text-align:center;
-	
 	flex-grow:1;
 	flex-basis:50%;
 }
@@ -69,8 +98,9 @@ div.flex > div > img {
 	height:100%;
 }
 
-div.flex div.textWrap {
-	position:absolute;
+div.textWrap {
+	padding:20px;
+	position:relative;
 	left:50%;
 	top:50%;
 	transform:translate(-50%,-50%);
@@ -86,6 +116,25 @@ div.textWrap > p:nth-of-type(1) {
 	font-weight: bold;
 }
 
+
+div.textWrapBottom {
+	padding:20px;
+	position:absolute;
+	left:50%;
+	bottom:0%;
+	transform:translate(-50%);
+}
+
+div.textWrapBottom > p {
+	color:white;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+div.textWrapBottom > p:nth-of-type(1) {
+	font-size:1.2rem;
+	font-weight: bold;
+}
+
 p.caption {
 	font-size:1.2rem;
 	display:block;
@@ -97,18 +146,49 @@ p.caption {
 	margin-top:100px;
 }
 
-@keyframes firstHalfAnimation {
-	from{left:1500px;transform:rotate(0deg);}
-	to{left:0px;transform:rotate(-360deg);}
+p.small {
+	font-size:0.8rem;
 }
-@keyframes secondHalfAnimation {
-	from{right:1500px;transform:rotate(0deg);}
-	to{right:0px;transform:rotate(360deg);}
+
+button.joinButton {
+	color:white;
+	background-color:transparent;
+	border:3px solid white;
+	outline:none;
+	padding:10px 12px;
+	border-radius:15%;
+	margin:10px;
+	transition:1s all linear;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+
+button.joinButton:hover {
+	cursor:pointer;
+	background-color:white;
+	color:tomato;
+}
+
+a.joinButton {
+	text-decoration: none;
+}
+
+
+
+
+
+/* Media Screen */
+
 
 
 @media only screen and (max-width:760px) {
+	* {
+		font-size:18px;
+	}
+	div.flex > div {
+		flex-grow:1;
+		flex-basis:100%;
+	}
 	span.letter {
-		font-size:2.5rem;
+		font-size:3rem;
 	}
 }
