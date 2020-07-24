@@ -17,9 +17,9 @@ app.use(session({
 	saveUninitialized: false
 }));
 
-app.get("/", function(req, res) {
+app.get("/", (req, res) => {
 	res.render("html/index");
 })
 
 
-app.listen(process.env.PORT || 3000, function(){console.log("App running on port 3000")});
+app.listen(process.env.PORT || 3000, () => {console.log("App running on port 3000")});
