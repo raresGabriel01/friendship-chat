@@ -1,4 +1,5 @@
 window.onload = () => {
+
 	var randomColors = ["#f42069", "#b4da55","#5cd6d6","#ff66cc","#ffff4d","tomato","#33cc33","#4d4dff","#ff99ff","#d68720"];
 	var letters = document.getElementsByClassName("letter");
 	for(let i = 0; i < letters.length; i++) {
@@ -24,7 +25,9 @@ window.onload = () => {
 	}, 6000);
 
 	randomQuote();
-	
+	if(window.innerWidth <= 760) {
+		swapOrder();
+	}
 }
 
 function randomQuote() {
@@ -42,4 +45,47 @@ function randomQuote() {
 
 function randInt(a,b) {
 	return Math.floor(Math.random()*(b-a) + a);
+}
+
+function displayLoginForm() {
+	let cover = document.createElement('div');
+	cover.classList.add('cover');
+	cover.id = 'cover';
+	cover.addEventListener('click', (e) => {
+		cover.parentNode.removeChild(cover);
+	});
+	let loginForm = document.createElement('div');
+	loginForm.classList.add('login');
+	loginForm.addEventListener('click',(e) => {
+		e.stopPropagation();
+	})
+	loginForm.innerHTML = "<p class ='title'> Login </p>\
+							<label>\
+							Uername: <input type='text' placeholder = 'Your username'/>\
+							</label>\
+							<label>\
+							Password: <input type='password' placeholder = 'Your password'/>\
+							</label>\
+							<button class = 'loginButton'> Submit </button>\
+							<p> Are you new here ? You can register by clicking <a href = 'javascript:void(0)'>here</a> </p>\
+							<p>Do you encounter any difficulties logging in ? Click <a href = 'javascript:void(0)'>here </a> </p>";
+	if(window.innerWidth <= 760) {
+		loginForm.innerHTML += "<button class = 'loginButton' onclick = 'goBack()'> Go Back </button>";
+	}
+	cover.appendChild(loginForm);
+	document.getElementById('body').appendChild(cover);
+}
+
+function goBack() {
+	let cover = document.getElementById('cover');
+	cover.parentNode.removeChild(cover);
+}
+
+function swapOrder() {
+	let div1 = document.getElementById('guyOnBench');
+	let div2 = document.getElementById('whatDoWeWantText');
+	let aux = div1.innerHTML;
+	div1.innerHTML = div2.innerHTML;
+	div2.innerHTML = aux;
+	div1.style.backgroundColor = '#66b8ff';
 }

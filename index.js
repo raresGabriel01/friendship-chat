@@ -17,11 +17,11 @@ app.use(session({
 	saveUninitialized: false
 }));
 
-app.get('/', (req, res) => {
-	res.render('html/index');
+app.get('/', (req, res) => {	// request for home page
+	res.render('html/home');
 });
 
-app.get('/*', (req, res) => {
+app.get('/*', (req, res) => {	// treating a general request 
 	res.render('html' + req.url);
 });
 

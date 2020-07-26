@@ -17,7 +17,7 @@ ul#menu:hover {
 }
 
 ul#menu>li {
-	transition:0.75s all linear;
+	transition:0.5s all linear;
 	
 	float:left;
 	text-align:center;
@@ -41,7 +41,7 @@ ul#menu>li:hover>a {
 
 ul#menu>li>a {
 	display:block;
-	transition:0.75s all linear;
+	transition:0.5s all linear;
 	text-decoration:none;
 	color:#6b90ff;
 	width:100%;
