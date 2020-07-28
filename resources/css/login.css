@@ -7,7 +7,7 @@ div.cover {
 	background-color:rgba(0, 0, 0, 0.8);
 	z-index:2;
 }
-div.login {
+form.login {
 	overflow:auto;
 	z-index:3;
 	position:relative;
@@ -27,35 +27,35 @@ div.login {
   	background-size: cover;
   	padding:15px;
 }
-div.login > p {
+form.login > p {
 	color:white;
 	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 	font-size:1.2rem;
 	margin-top:20px;
 	text-align:center;
 }
-div.login > p > a {
+form.login > p > a {
 	color:#3967d4;
 	text-decoration: none;
 	font-size:1.2rem;
 }
-div.login > p > a:hover {
+form.login > p > a:hover {
 	text-decoration:underline;
 }
-div.login > p.title {
+form.login > p.title {
 	font-size:3rem;
 }
 
-div.login > label {
+form.login > label {
 	font-size:1.2rem;
 	color:white;
 	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
-div.login > label >  input[type='text'], div.login > label > input[type='password'] {
+form.login > label >  input[type='text'], form.login > label > input[type='password'] {
 	width:100%;
 }
-button.loginButton {
+input[type='submit'].loginButton , input[type='button'].loginButton{
 	background-color: #349799;
 	font-size:1.2rem;
 	color:white;
@@ -71,17 +71,25 @@ button.loginButton {
 	transition:0.5s all linear;
 }
 
-button.loginButton:hover {
+input[type='submit']:hover, input[type='button'].loginButton:hover {
 	cursor:pointer;
 	color:#349799;
 	background-color:white;
 }
 
+span.warning {
+	margin-top:5px;
+	display:block;
+	color:red;
+	text-align:center;
+}
+
 @media only screen and (max-width: 760px) {
-	div.login {
+	form.login {
 		width:90%;
 	}
-	div.login > p.title {
+	form.login > p.title {
 		font-size:2.5rem;
 	}
 }
+

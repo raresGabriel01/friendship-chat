@@ -53,9 +53,46 @@ app.post('/registerNewUser',async (req,res)=> {
 	});
 });
 
+app.post('/login', async(req, res) => {
+	var form = new formidable.IncomingForm();
+	form.parse(req, async(err, fields, files) => {
+		let client = await pool.connect();
+		let cryptedPassword;
+		let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',"cryptingpassword");
+		cryptedPassword = cryptingAlgorithm.update(fields.password, "utf-8", "hex");
+		cryptedPassword += cryptingAlgorithm.final("hex");
+
+		let result = await client.query("SELECT username, password FROM users WHERE username = '" + fields.username +"';");
+
+		if(result.rows.length != 1) {
+			res.send('1');
+		}
+		else {
+			if(result.rows[0].password != cryptedPassword) {
+				res.send('2');
+			}
+			else {
+				req.session.user = {'username':fields.username};
+				res.send('3');
+			}
+		}
+	});
+});
+
+app.get('/logout', function(req,res) {
+  req.session.destroy();
+  res.redirect('/');
+});
 
 app.get('/', (req, res) => {	// request for home page
-	res.render('html/home');
+	let _user = null;
+	if(req.session){
+		if(req.session.user) {
+			//res.render('html/home',{user:req.session.user});
+			_user = req.session.user;
+		}
+	}	
+	res.render('html/home',{user:_user});
 });
 
 app.get('/checkUsername', async (req, res) => {
@@ -88,7 +125,14 @@ app.get('/checkEmail', async(req, res) => {
 })
 
 app.get('/*', (req, res) => {	// treating a general request 
-	res.render('html' + req.url);
+	let _user = null;
+	if(req.session){
+		if(req.session.user) {
+			//res.render('html/home',{user:req.session.user});
+			_user = req.session.user;
+		}
+	}
+	res.render('html' + req.url, {user:_user});
 });
 
 
