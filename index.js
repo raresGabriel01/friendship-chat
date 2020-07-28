@@ -109,7 +109,7 @@ async function checkUsername(username) {
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
-		let result = await client.query('SELECT username FROM users WHERE username = ' + username + ';');
+		let result = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
 		if(result.rows.length == 0) {
 			response.msg = 'Username is ok';
 			response.color = 'green';
@@ -130,7 +130,7 @@ async function checkEmail (email) {
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
-		let result = await client.query('SELECT email FROM users WHERE email = ' + email + ';');
+		let result = await client.query("SELECT email FROM users WHERE email = '" + email + "';");
 		if(result.rows.length == 0) {
 			response.msg = 'Email is ok';
 			response.color = 'green';
