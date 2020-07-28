@@ -99,42 +99,10 @@ div.flex > div > img {
 	height:100%;
 }
 
-div.textWrap {
-	padding:20px;
-	position:relative;
-	left:50%;
-	top:50%;
-	transform:translate(-50%,-50%);
-}
-
-div.textWrap > p {
-	color:white;
-	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-
-div.textWrap > p:nth-of-type(1) {
-	font-size:1.2rem;
-	font-weight: bold;
-}
 
 
-div.textWrapBottom {
-	padding:20px;
-	position:absolute;
-	left:50%;
-	bottom:0%;
-	transform:translate(-50%);
-}
 
-div.textWrapBottom > p {
-	color:white;
-	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
 
-div.textWrapBottom > p:nth-of-type(1) {
-	font-size:1.2rem;
-	font-weight: bold;
-}
 
 p.caption {
 	font-size:1.2rem;
@@ -198,7 +166,7 @@ a.joinButton {
 
 @media only screen and (max-width:760px) {
 	* {
-		font-size:18px;
+		font-size:16px;
 	}
 	div.flex > div {
 		flex-grow:1;
@@ -218,5 +186,11 @@ a.joinButton {
 	@keyframes secondHalfAnimation {
 		from{right:750px;transform:rotate(0deg);}
 		to{right:0px;transform:rotate(360deg);}
+	}
+}
+
+@media only screen and (max-width:360px) {
+	* {
+		font-size:15px;
 	}
 }

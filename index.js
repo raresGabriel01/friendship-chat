@@ -43,8 +43,10 @@ app.post('/registerNewUser',async (req,res)=> {
 				cryptedPassword = cryptingAlgorithm.update(fields.password, "utf-8", "hex");
 				cryptedPassword += cryptingAlgorithm.final("hex");
 				await client.query("INSERT INTO users(username, email, password) VALUES ('" + fields.username +"','"+fields.email+"','"+cryptedPassword+"');");
+				res.send('OK');
 			}
 			catch(err) {
+				res.send('NOT OK');
 				console.log(err);
 			}
 		}
@@ -57,14 +59,11 @@ app.get('/', (req, res) => {	// request for home page
 });
 
 app.get('/checkUsername', async (req, res) => {
-	console.log("Sunt aici, in checkUsername");
 	let username = req.query.username;
-	console.log("Am username-ul " + username);
 	if(username.length > 15) {
 		res.json({'msg':'Your username is too long', 'color':'red'});
 	}
 	let response = await checkUsername(username);
-	console.log(response);
 	if(response == null) {
 		res.send("Error");
 	}
@@ -87,34 +86,20 @@ app.get('/checkEmail', async(req, res) => {
 		res.json(response);
 	}
 })
-/*app.get('/db', async (req, res) => {
-    try {
-      const client = await pool.connect();
-      const result = await client.query('SELECT * FROM test_table');
-      console.log(result.rows);
-      res.render('html/test', {r:result.rows} );
-      client.release();
-    } catch (err) {
-      console.error(err);
-      res.send("Error " + err);
-    }
-  })*/
 
 app.get('/*', (req, res) => {	// treating a general request 
 	res.render('html' + req.url);
 });
 
 
-app.listen(process.env.PORT || 3000, () => {console.log("App running on port 3000")});
+app.listen(process.env.PORT || 3000, () => {console.log("App running")});
 
 
 async function checkUsername(username) {
-	console.log("Sunt in functia de verificare cu username-ul " + username);
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
 		let result = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
-		console.log(result);
 		if(result.rows.length == 0) {
 			response.msg = 'Username is ok';
 			response.color = 'green';
@@ -123,15 +108,18 @@ async function checkUsername(username) {
 			response.msg = 'Username is not available';
 			response.color = 'red';
 		}
-		return response;
+		
 	}
 	catch(err) {
-		return null;
+		response.msg = 'Sorry, something went wrong';
+		response.color = 'red';
 	}
+	return response;
 }
 
 
 async function checkEmail (email) {
+
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
@@ -142,17 +130,22 @@ async function checkEmail (email) {
 		}
 		else {
 			response.msg = 'Email is not available';
-			repsonse.color = 'red';
+			response.color = 'red';
 		}
-		return response;
+		
 	}
 	catch(err) {
-		return null;
+		response.msg = 'Sorry, something went wrong';
+		response.color = 'red';
 	}
+	return response;
 }
 
 function checkPassword(password) {
 	if(password.length > 150) {
+		return false;
+	}
+	if(password.length < 6) {
 		return false;
 	}
 	let points = 0;
@@ -174,9 +167,6 @@ function checkPassword(password) {
 	let msg = "";
 	let color = "";
 
-	if(password.length < 6) {
-		return false;
-	}
 	if(points >= 3) {
 		return true;
 	}	

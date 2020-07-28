@@ -4,8 +4,9 @@
 	<%- include('../pieces/head-content.ejs') %>
 	<link  type = 'text/css' rel ='stylesheet' href = 'css/register-style.css'/>
 	<script type ='text/javascript' src = '/js/register.js'> </script>
+	<script type ='text/javascript' src = '/js/util.js'> </script>
 </head>
-<body>
+<body id = 'body'>
 	<%-include('../pieces/menu.ejs') %>
 	<div class = 'registerForm'>
 		<p class = 'title'> Register by filling the following form ! </p>
@@ -28,5 +29,6 @@
 		<button class = 'submitButton' onclick = 'makeRequest()'> Submit </button>
 		<span class ='warning' id = 'submitWarning'></span>
 	</div>
+	<%-include('../pieces/footer.ejs') %>
 </body>
 </html>

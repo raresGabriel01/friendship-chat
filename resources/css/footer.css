@@ -20,3 +20,21 @@ span.icon:hover > a{
 	font-size:2.8rem;
 	cursor:pointer;
 }
+
+div.textWrap {
+	padding:20px;
+	position:relative;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+}
+
+div.textWrap > p {
+	color:white;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+div.textWrap > p:nth-of-type(1) {
+	font-size:1.2rem;
+	font-weight: bold;
+}

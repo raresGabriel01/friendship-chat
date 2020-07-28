@@ -81,4 +81,7 @@ button.loginButton:hover {
 	div.login {
 		width:90%;
 	}
+	div.login > p.title {
+		font-size:2.5rem;
+	}
 }

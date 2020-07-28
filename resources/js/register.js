@@ -75,8 +75,19 @@ function makeRequest() {
 	if(submitWarning.innerText == "") {
 		let xhttp = new XMLHttpRequest();
 
-		xhttp.onreadystatechange = () => {
-			if(this.state == 200 && this.readyState == 4) {
+		xhttp.onreadystatechange = function() {
+			if(this.status == 200 && this.readyState == 4) {
+				let registerForm = document.getElementsByClassName('registerForm')[0];
+				registerForm.style.textAlign = 'center';
+				if(this.responseText == 'OK') {
+					registerForm.innerHTML = "";
+					registerForm.style.color = 'green';
+					registerForm.innerText = 'User succesfully registerd';
+				}
+				else {
+					registerForm.style.color = 'red';
+					registerForm.innerText = 'Something went wrong, please try again';
+				}
 			}
 		}
 		params = `username=${username.value}&email=${email.value}&password=${password.value}&cpassword=${cpassword.value}`;
@@ -96,8 +107,8 @@ function checkUsername(username) {
 		return ;
 	}
 	let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = () => {
-		if(this.readyState == 4 && this.state == 200) {
+	xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200) {
 			let json = JSON.parse(this.responseText);
 			usernameWarning.style.color = json.color;
 			usernameWarning.innerText = json.msg;
@@ -114,8 +125,8 @@ function checkEmail(email) {
 		return ;
 	}
 	let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = () => {
-		if(this.readyState == 4 && this.state == 200) {
+	xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200) {
 			let json = JSON.parse(this.responseText);
 			emailWarning.style.color = json.color;
 			emailWarning.innerText = json.msg;
@@ -135,9 +146,6 @@ function checkPassword(password) {
 	let usualCharacters = 'abcdefghijklmnopqrstuvwxyz0123456789';
 	let digits =  '0123456789';
 	if(password.length >= 8) {
-		points++;
-	}
-	if(password.length >= 10) {
 		points++;
 	}
 	if(password.toLowerCase() != password) {
