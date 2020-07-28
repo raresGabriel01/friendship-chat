@@ -67,8 +67,8 @@ function displayLoginForm() {
 							Password: <input type='password' placeholder = 'Your password'/>\
 							</label>\
 							<button class = 'loginButton'> Submit </button>\
-							<p> Are you new here ? You can register by clicking <a href = 'javascript:void(0)'>here</a> </p>\
-							<p>Do you encounter any difficulties logging in ? Click <a href = 'javascript:void(0)'>here </a> </p>";
+							<p> Do you have an account? If not, click <a href = '/register'>here</a> </p>\
+							<p>Do you encounter any difficulties logging in? Click <a href = 'javascript:void(0)'>here </a> </p>";
 	if(window.innerWidth <= 760) {
 		loginForm.innerHTML += "<button class = 'loginButton' onclick = 'goBack()'> Go Back </button>";
 	}

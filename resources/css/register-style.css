@@ -1,0 +1,79 @@
+@import "menu.css";
+
+* {
+	margin:0;
+	padding:0;
+	font-size:22px;
+	font-family:"Comic Sans MS", cursive, sans-serif;
+	box-sizing: border-box;
+}
+html {
+	height:100%;
+}
+
+body {
+	background-image:url('/img/register.jpg');
+	background-position: 100% 100%;
+	background-position: center;
+  	background-repeat: no-repeat; /* Do not repeat the image */
+  	background-size: cover;
+}
+
+div.registerForm {
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	background-color:white;
+	border:5px solid black;
+	border-radius:10%;
+	box-shadow: 0px 0px 10px black;
+	width:50%;
+	margin-top:100px;
+	padding: 15px;
+}
+
+div.registerForm > p { 
+	font-size:1.2rem;
+	text-align:center;
+	margin:10px;
+}
+
+div.registerForm > label {
+	
+}
+
+div.registerForm > label > input[type='text'], div.registerForm > label > input[type='password'] {
+	width:100%;
+	margin-bottom:10px;
+}
+
+button.submitButton {
+	font-size:1.2rem;
+	border:3px solid #6b90ff;
+	background-color:white;
+	color:#6b90ff;
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	padding:5px;
+	border-radius:10%;
+	transition:0.5s all linear;
+	margin-top:5px;
+}
+
+button.submitButton:hover {
+	color:white;
+	background-color:#6b90ff;
+	cursor: pointer;
+}
+
+span.warning {
+	display:block;
+	font-size:0.8rem;
+	margin-bottom:5px;
+	color:red;
+}
+span#submitWarning {
+	margin-top:5px;
+	text-align:center;
+}
