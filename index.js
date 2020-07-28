@@ -57,11 +57,14 @@ app.get('/', (req, res) => {	// request for home page
 });
 
 app.get('/checkUsername', async (req, res) => {
+	console.log("Sunt aici, in checkUsername");
 	let username = req.query.username;
+	console.log("Am username-ul " + username);
 	if(username.length > 15) {
 		res.json({'msg':'Your username is too long', 'color':'red'});
 	}
 	let response = await checkUsername(username);
+	console.log(response);
 	if(response == null) {
 		res.send("Error");
 	}
@@ -106,10 +109,12 @@ app.listen(process.env.PORT || 3000, () => {console.log("App running on port 300
 
 
 async function checkUsername(username) {
+	console.log("Sunt in functia de verificare cu username-ul " + username);
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
 		let result = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
+		console.log(result);
 		if(result.rows.length == 0) {
 			response.msg = 'Username is ok';
 			response.color = 'green';
