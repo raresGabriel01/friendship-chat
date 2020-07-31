@@ -151,7 +151,7 @@ app.get('/confirm', async (req,res) => {
 	let username = req.query.username;
 
 	let client = await pool.connect();
-	let result = await client.query("SELECT username FROM waiting_users WHERE username = '" + username +"';");
+	let result = await client.query("SELECT * FROM waiting_users WHERE username = '" + username +"';");
 	if(result.rows.length == 1) {
 		await client.query("DELETE FROM waiting_users WHERE username = '" + username + "';");
 		await client.query("INSERT INTO users(username, email, password) VALUES ('" + result.rows[0].username +"','"+result.rows[0].email+"','"+result.rows[0].password+"');");
