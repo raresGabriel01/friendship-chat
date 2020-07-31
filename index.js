@@ -276,7 +276,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: 'parola123*'
+    		pass: process.env.EMAIL_PASSWORD
   		}
 	});
 
