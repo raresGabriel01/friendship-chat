@@ -1,14 +1,9 @@
 @import "menu.css";
 @import "footer.css";
 @import "login.css";
+@import "scrollbar.css";
+@import "universal.css";
 
-* {
-	margin:0;
-	padding:0;
-	font-size:22px;
-	font-family:"Comic Sans MS", cursive, sans-serif;
-	box-sizing: border-box;
-}
 html {
 	height:100%;
 }
@@ -85,25 +80,8 @@ span#submitWarning {
 	text-align:center;
 }
 
-@media only screen and (min-width:361px) and (max-width:760px) {
-	* {
-		font-size:16px;
-	}
-	div.registerForm {
-		width:90%;
-		margin-top:25px;
-		margin-bottom:25px;
-	}
-	body {
-		background-image:url('/img/register_phone.jpg');
-	}
+@media only screen  and (max-width:760px) {
 
-}
-
-@media only screen and (max-width: 360px) {
-	* {
-		font-size:15px;
-	}
 	div.registerForm {
 		width:90%;
 		margin-top:25px;

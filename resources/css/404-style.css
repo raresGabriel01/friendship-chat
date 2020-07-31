@@ -1,0 +1,24 @@
+@import "menu.css";
+@import "footer.css";
+@import "scrollbar.css";
+@import "universal.css";
+@import "login.css";
+
+
+h1 {
+	font-size:2rem;
+	text-align:center;
+	margin:50px;
+}
+
+img {
+	width:50%;
+	display:block;
+	margin:20px auto 20px auto;
+}
+
+@media only screen and (max-width:760px) {
+	img {
+		width:100%;
+	}
+}

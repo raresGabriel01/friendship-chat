@@ -1,0 +1,16 @@
+@import "menu.css";
+@import "footer.css";
+@import "scrollbar.css";
+@import "universal.css";
+@import "login.css";
+
+
+h1 {
+	font-size:2rem;
+	text-align:center;
+	margin:50px;
+	color:green;
+}
+
+
+

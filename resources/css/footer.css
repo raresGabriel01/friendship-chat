@@ -1,8 +1,10 @@
 footer {
-	position:relative;
+	position:absolute;
+	bottom:0;
 	text-align:center;
 	background-color:#ce63ff;
 	height:500px;
+	width:100%;
 }
 span.icon > a {
 	display:inline-block;
@@ -37,4 +39,10 @@ div.textWrap > p {
 div.textWrap > p:nth-of-type(1) {
 	font-size:1.2rem;
 	font-weight: bold;
+}
+
+@media only screen and (max-width:765px) {
+	footer {
+		height:250px;
+	}
 }

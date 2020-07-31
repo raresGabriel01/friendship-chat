@@ -1,0 +1,43 @@
+@import "menu.css";
+@import "footer.css";
+@import "login.css";
+@import "scrollbar.css";
+@import "universal.css";
+
+p.unregistered {
+	color:red;
+	text-align:center;
+	font-size:1.4rem;
+}
+
+p.mention {
+	text-align:center;
+}
+
+p.unregistered, p.mention {
+	margin:15px;
+}
+
+a {
+	text-decoration:none;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+.fa-ban {
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	color:red;
+	font-size:20rem;
+	text-align:center;
+}
+
+@media only screen and (max-width:760px) {
+	.fa-ban {
+		font-size:10rem;
+	}
+}
+

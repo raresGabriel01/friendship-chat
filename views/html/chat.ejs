@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<%- include('../pieces/head-content.ejs') %>
+	<link type = 'text/css' rel = 'stylesheet' href = '/css/chat-style.css'/>
+	<script type = 'text/javascript' src = '/js/chat.js'></script>
+	
+</head>
+<body id = 'body'>
+	<div id = 'pageContainer'>
+		<div id = 'contentWrap'>
+			<%- include('../pieces/menu.ejs') %>
+			<% if(!locals.user) { %>
+			<i class="fa fa-ban" aria-hidden="true"></i>
+			<p class = 'unregistered'> Sorry, but you can't access the chat if you're not logged in ! </p>
+			<p class = 'mention'> You can log in by clicking <a href = 'javascript:void(0)' onclick = 'displayLoginForm()'> here </a> </p>
+			<p class = 'mention'> If you don't have an account you can register by clicking <a href = '/register'> here </a> </p>
+			<% } else { %>
+			<p> Chat </p>
+			<% } %>
+		</div>
+		<%- include('../pieces/footer.ejs') %>
+	</div>
+</body>
+</html>

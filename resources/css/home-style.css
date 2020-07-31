@@ -5,15 +5,9 @@
 @import "menu.css";
 @import "footer.css";
 @import "login.css";
+@import "universal.css";
 
 
-* {
-	margin:0;
-	padding:0;
-	font-size:22px;
-	font-family:"Comic Sans MS", cursive, sans-serif;
-	box-sizing: border-box;
-}
 
 body, html {
   height: 100%;
@@ -120,6 +114,13 @@ div.quoteWrapper {
 	height:500px;
 }
 
+
+
+div.joinDiv {
+	background-color:tomato;
+	height:500px;
+}
+
 p#quote {
 	top:50%;
 	transform:translate(-50%,-50%);
@@ -150,6 +151,7 @@ button.joinButton:hover {
 	cursor:pointer;
 	background-color:white;
 	color:tomato;
+	text-shadow:none;
 }
 
 a.joinButton {
@@ -165,9 +167,6 @@ a.joinButton {
 
 
 @media only screen and (max-width:760px) {
-	* {
-		font-size:16px;
-	}
 	div.flex > div {
 		flex-grow:1;
 		flex-basis:100%;
@@ -177,8 +176,12 @@ a.joinButton {
 		animation-duration:2.5s;
 	}
 
-
-
+	div.quoteWrapper {
+		height:250px;
+	}
+	div.joinDiv {
+		height:250px;
+	}
 	@keyframes firstHalfAnimation {
 		from{left:750px;transform:rotate(0deg);}
 		to{left:0px;transform:rotate(-360deg);}
@@ -189,8 +192,3 @@ a.joinButton {
 	}
 }
 
-@media only screen and (max-width:360px) {
-	* {
-		font-size:15px;
-	}
-}

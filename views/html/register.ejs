@@ -4,31 +4,34 @@
 	<%- include('../pieces/head-content.ejs') %>
 	<link  type = 'text/css' rel ='stylesheet' href = 'css/register-style.css'/>
 	<script type ='text/javascript' src = '/js/register.js'> </script>
-	<script type ='text/javascript' src = '/js/util.js'> </script>
 </head>
 <body id = 'body'>
-	<%-include('../pieces/menu.ejs') %>
-	<div class = 'registerForm'>
-		<p class = 'title'> Register by filling the following form</p>
-		<label>
-			Username: <input type = 'text'  id = 'username' placeholder = 'Be creative !'/>
-		</label>
-		<span class = 'warning' id ='usernameWarning'></span>
-		<label>
-			E-mail: <input type = 'text' id = 'email' placeholder = 'We will send you a confirmation e-mail'/>
-		</label>
-		<span class = 'warning' id = 'emailWarning'></span>
-		<label>
-			Password: <input type = 'password' id = 'password' placeholder='Keep it a secret !'/>
-		</label>
-		<span class = 'warning' id ='passwordWarning'></span>
-		<label>
-			Confirm your password:<input type = 'password' id = 'cpassword' placeholder='Just to make sure'/>
-		</label>
-		<span class = 'warning' id = 'cpasswordWarning'> </span>
-		<button class = 'submitButton' onclick = 'makeRequest()'> Submit </button>
-		<span class ='warning' id = 'submitWarning'></span>
+	<div id = 'pageContainer'>
+		<div id = 'contentWrap'>
+			<%-include('../pieces/menu.ejs') %>
+			<div class = 'registerForm'>
+				<p class = 'title'> Register by filling the following form</p>
+				<label>
+					Username: <input type = 'text'  id = 'username' placeholder = 'Be creative !'/>
+				</label>
+				<span class = 'warning' id ='usernameWarning'></span>
+				<label>
+					E-mail: <input type = 'text' id = 'email' placeholder = 'We will send you a confirmation e-mail'/>
+				</label>
+				<span class = 'warning' id = 'emailWarning'></span>
+				<label>
+					Password: <input type = 'password' id = 'password' placeholder='Keep it a secret !'/>
+				</label>
+				<span class = 'warning' id ='passwordWarning'></span>
+				<label>
+					Confirm your password:<input type = 'password' id = 'cpassword' placeholder='Just to make sure'/>
+				</label>
+				<span class = 'warning' id = 'cpasswordWarning'> </span>
+				<button class = 'submitButton' onclick = 'makeRequest()'> Submit </button>
+				<span class ='warning' id = 'submitWarning'></span>
+			</div>
+		</div>
+		<%-include('../pieces/footer.ejs') %>
 	</div>
-	<%-include('../pieces/footer.ejs') %>
 </body>
 </html>

@@ -7,6 +7,7 @@ const path = require('path');
 const formidable = require("formidable");
 const crypto = require("crypto");
 const { Pool } = require('pg');
+const nodemailer = require('nodemailer');
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
  
@@ -43,13 +44,27 @@ app.post('/registerNewUser',async (req,res)=> {
 				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',"cryptingpassword");
 				cryptedPassword = cryptingAlgorithm.update(fields.password, "utf-8", "hex");
 				cryptedPassword += cryptingAlgorithm.final("hex");
-				await client.query("INSERT INTO users(username, email, password) VALUES ('" + fields.username +"','"+fields.email+"','"+cryptedPassword+"');");
+				await client.query("INSERT INTO waiting_users(username, email, password) VALUES ('" + fields.username +"','"+fields.email+"','"+cryptedPassword+"');");
+				
+
+				let textLink = "https://friendship-chat.herokuapp.com/confirm/?username="+fields.username;
+				let reportLink = "https://friendship-chat.herokuapp.com/report"
+				let html = '<img style="display:block;margin:auto;width:50%" src ="https://i.pinimg.com/originals/9f/8d/5d/9f8d5d463f7b67c2be23d31791384254.jpg">\
+							<h1 style="text-align:center"> Hello, ' + fields.username  +' !</h1>\
+							<p style="text-align:center;font-size:18px;"> You are just a step away from being able to use our platform </p>\
+							<p style="text-align:center;font-size:18px;"> To confirm your registration, click <a href=\"'+ textLink.toString() + '\"> here </a> </p>\
+							<p style="text-align:center;font-size:18px;"> If you do not remember registering to our website, please report it <a href=\"'+ reportLink.toString() + '\"> here </a> </p>'
+				sendEmail(fields.email, 'Confirm your registration', html);
+
 				res.send('OK');
 			}
 			catch(err) {
 				res.send('NOT OK');
 				console.log(err);
 			}
+		}
+		else {
+			res.send('NOT OK');
 		}
 	});
 });
@@ -123,7 +138,29 @@ app.get('/checkEmail', async(req, res) => {
 	else {
 		res.json(response);
 	}
-})
+});
+
+app.get('/confirm', async (req,res) => {
+	let _user = null;
+	if(req.session) {
+		if(req.session.user) {
+			_user = req.session.user;
+		}
+	}
+
+	let username = req.query.username;
+
+	let client = await pool.connect();
+	let result = await client.query("SELECT username FROM waiting_users WHERE username = '" + username +"';");
+	if(result.rows.length == 1) {
+		await client.query("DELETE FROM waiting_users WHERE username = '" + username + "';");
+		await client.query("INSERT INTO waiting_users(username, email, password) VALUES ('" + result.rows[0].username +"','"+result.rows[0].email+"','"+result.rows[0].password+"');");
+		res.render('html/confirm');
+	}
+	else {
+		res.redirect('/404');
+	}
+});
 
 app.get('/*', (req, res) => {	// treating a general request 
 	let _user = null;
@@ -133,7 +170,17 @@ app.get('/*', (req, res) => {	// treating a general request
 			_user = req.session.user;
 		}
 	}
-	res.render('html' + req.url, {user:_user});
+	res.render('html' + req.url, {user:_user}, (err, html) => {
+		if(err) {
+			if(err.message.includes("Failed to lookup view")) {
+				return res.status(404).render('html/404', {user:_user});
+			}
+			else {
+				throw err;
+			}
+		}
+		res.send(html);
+	});
 });
 
 
@@ -144,8 +191,9 @@ async function checkUsername(username) {
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
-		let result = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
-		if(result.rows.length == 0) {
+		let result1 = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
+		let result2 = await client.query("SELECT username FROM waiting_users WHERE username ='" + username +"';");
+		if(result1.rows.length == 0 && result2.rows.length == 0) {
 			response.msg = 'Username is ok';
 			response.color = 'green';
 		}
@@ -168,8 +216,9 @@ async function checkEmail (email) {
 	let response = {'msg':'', 'color':''};
 	try {
 		let client = await pool.connect();
-		let result = await client.query("SELECT email FROM users WHERE email = '" + email + "';");
-		if(result.rows.length == 0) {
+		let result1 = await client.query("SELECT email FROM users WHERE email = '" + email + "';");
+		let result2 = await client.query("SELECT email FROM waiting_users WHERE email = '" + email + "';");
+		if(result1.rows.length == 0 && result2.rows.length == 0) {
 			response.msg = 'Email is ok';
 			response.color = 'green';
 		}
@@ -216,4 +265,29 @@ function checkPassword(password) {
 		return true;
 	}	
 	return false;
+}
+
+async function sendEmail (_reciever, _subject, _html) {
+	var transporter = nodemailer.createTransport({
+  		service: 'gmail',
+  		auth: {
+    		user: 'rares.gabi.web@gmail.com',
+    		pass: process.env.EMAIL_PASSWORD
+  		}
+	});
+
+	var mailOptions = {
+  		from: 'rares.gabi.web@gmail.com',
+  		to: _reciever,
+  		subject: _subject,
+  		html: _html
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+  		if (error) {
+    		console.log(error);
+  		} else {
+    		console.log('Email sent: ' + info.response);
+  		}
+	});
 }

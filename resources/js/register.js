@@ -41,10 +41,10 @@ window.onload = () => {
 		});
 		if(i !=2) {
 			fields[i].addEventListener('keydown', (e) => {
-				if(e.code == 'Space' || e.code == 'Tab') {
+				if(e.code == 'Space') {
 					e.preventDefault();
 				}
-				else {
+				else if(e.code != 'Tab'){
 					warnings[i].innerText = "";
 				}
 				
@@ -56,7 +56,7 @@ window.onload = () => {
 				if(e.code == 'Space') {
 					e.preventDefault();
 				}
-				else {
+				else if(e.code != 'Tab'){
 					warnings[i].innerText = "";
 					warnings[i+1].innerText = "";					
 				}
@@ -67,22 +67,18 @@ window.onload = () => {
 }
 
 function makeRequest() {
-	for(let i = 0; i < warnings.length; i++) {
-		if(warnings[i].innerText.trim() == '' || warnings[i].style.color == 'red' || warnings[i].style.color == 'darkred') {
-			submitWarning.innerText = 'Please fill all the form fields correctly !';
-		}
-	}
-	if(submitWarning.innerText == "") {
+
+	
 		let xhttp = new XMLHttpRequest();
 
 		xhttp.onreadystatechange = function() {
 			if(this.status == 200 && this.readyState == 4) {
 				let registerForm = document.getElementsByClassName('registerForm')[0];
 				registerForm.style.textAlign = 'center';
+				registerForm.innerHTML = "";
 				if(this.responseText == 'OK') {
-					registerForm.innerHTML = "";
 					registerForm.style.color = 'green';
-					registerForm.innerText = 'User succesfully registerd';
+					registerForm.innerText = 'User succesfully registerd ! Check your email for confirmation !';
 				}
 				else {
 					registerForm.style.color = 'red';
@@ -94,7 +90,7 @@ function makeRequest() {
 		xhttp.open('POST', '/registerNewUser', true);
 		xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xhttp.send(params);
-	}
+	
 
 }
 

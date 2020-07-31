@@ -4,7 +4,7 @@
 	<%- include('../pieces/head-content.ejs') %>
 	<link  type = 'text/css' rel ='stylesheet' href = 'css/home-style.css'/>
 	<script type ='text/javascript' src = '/js/home.js'> </script>
-	<script type ='text/javascript' src = '/js/util.js'> </script>
+	
 </head>
 <body id = 'body'>
 	<div class = 'banner'>
@@ -21,7 +21,8 @@
 			<span class ='letter secondHalf'>p</span>
 		</div>
 	</div>
-	<div id = 'bigWrapper'>
+	<div id = 'pageContainer'>
+	<div id ='contentWrap'>
 		<%-include('../pieces/menu.ejs') %>
 
 		<p class ='caption'> The oportunity to find new friends at your fingertips ! </p>
@@ -59,7 +60,7 @@
 				<img src = '/img/lonely.jpg'/>
 			</div>
 
-			<div style ='background-color:tomato;height:500px;'>
+			<div class = 'joinDiv' >
 				  <div class ='textWrap' >
 				  	<p> So what do you have to do ? </p>
 				  	<a href ="javascript:void(0)"><button class = 'joinButton'> Click here to join us ! </button></a>
@@ -68,8 +69,11 @@
 			</div>
 			
 		</div>
+		
+	</div>
+	<%- include('../pieces/footer.ejs') %>
 	</div>
 	
-	<%- include('../pieces/footer.ejs') %>
+	
 </body>
 </html
