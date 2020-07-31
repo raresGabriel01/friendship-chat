@@ -227,8 +227,8 @@ async function checkEmail (email) {
 		else {
 			response.msg = 'Email is not available';
 			response.color = 'red';
-			return response;
 		}
+		return response;
 		
 	}
 	catch(err) {
