@@ -54,7 +54,7 @@ app.post('/registerNewUser',async (req,res)=> {
 							<p style="text-align:center;font-size:18px;"> You are just a step away from being able to use our platform </p>\
 							<p style="text-align:center;font-size:18px;"> To confirm your registration, click <a href=\"'+ textLink.toString() + '\"> here </a> </p>\
 							<p style="text-align:center;font-size:18px;"> If you do not remember registering to our website, please report it <a href=\"'+ reportLink.toString() + '\"> here </a> </p>'
-				sendEmail(fields.email, 'Confirm your registration', html);
+				await sendEmail(fields.email, 'Confirm your registration', html);
 
 				res.send('OK');
 			}
