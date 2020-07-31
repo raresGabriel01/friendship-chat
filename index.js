@@ -279,7 +279,8 @@ async function sendEmail (_reciever, _subject, _html) {
     		pass: process.env.EMAIL_PASSWORD
   		}
 	});
-
+	console.log(process.env.EMAIL_PASSWORD);
+	console.log(process.env);
 	var mailOptions = {
   		from: 'rares.gabi.web@gmail.com',
   		to: _reciever,
