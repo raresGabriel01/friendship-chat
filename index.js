@@ -9,7 +9,7 @@ const crypto = require("crypto");
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: 'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -188,11 +188,11 @@ app.listen(process.env.PORT || 3000, () => {console.log("App running")});
 
 
 async function checkUsername(username) {
-	let response = {'msg':'', 'color':''};
+	var response = {'msg':'', 'color':''};
 	try {
-		let client = await pool.connect();
-		let result1 = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
-		let result2 = await client.query("SELECT username FROM waiting_users WHERE username ='" + username +"';");
+		var client = await pool.connect();
+		var result1 = await client.query("SELECT username FROM users WHERE username = '" + username + "';");
+		var result2 = await client.query("SELECT username FROM waiting_users WHERE username ='" + username +"';");
 		if(result1.rows.length == 0 && result2.rows.length == 0) {
 			response.msg = 'Username is ok';
 			response.color = 'green';
@@ -201,23 +201,25 @@ async function checkUsername(username) {
 			response.msg = 'Username is not available';
 			response.color = 'red';
 		}
+		return response;
 		
 	}
 	catch(err) {
 		response.msg = 'Sorry, something went wrong';
 		response.color = 'red';
+		return response;
 	}
-	return response;
+	
 }
 
 
 async function checkEmail (email) {
 
-	let response = {'msg':'', 'color':''};
+	var response = {'msg':'', 'color':''};
 	try {
-		let client = await pool.connect();
-		let result1 = await client.query("SELECT email FROM users WHERE email = '" + email + "';");
-		let result2 = await client.query("SELECT email FROM waiting_users WHERE email = '" + email + "';");
+		var client = await pool.connect();
+		var result1 = await client.query("SELECT email FROM users WHERE email = '" + email + "';");
+		var result2 = await client.query("SELECT email FROM waiting_users WHERE email = '" + email + "';");
 		if(result1.rows.length == 0 && result2.rows.length == 0) {
 			response.msg = 'Email is ok';
 			response.color = 'green';
@@ -225,14 +227,16 @@ async function checkEmail (email) {
 		else {
 			response.msg = 'Email is not available';
 			response.color = 'red';
+			return response;
 		}
 		
 	}
 	catch(err) {
 		response.msg = 'Sorry, something went wrong';
 		response.color = 'red';
+		return response;
 	}
-	return response;
+	
 }
 
 function checkPassword(password) {
@@ -272,7 +276,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: process.env.EMAIL_PASSWORD
+    		pass: 'parola123*'
   		}
 	});
 
