@@ -8,13 +8,18 @@ const formidable = require("formidable");
 const crypto = require("crypto");
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
+const socket = require('socket.io');
+const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString: 'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
+  connectionString: process.env.DATABASE_URL,
  
   ssl: {
     rejectUnauthorized: false
   }
 });
+
+
+
 
 const app = express();
 
@@ -88,6 +93,11 @@ app.post('/login', async(req, res) => {
 				res.send('2');
 			}
 			else {
+				let cryptedUsername;
+				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc', 'cryptingpassword');
+				cryptedUsername = cryptingAlgorithm.update(fields.username,'utf-8','hex');
+				cryptedUsername += cryptingAlgorithm.final('hex');
+				res.cookie('username', cryptedUsername, {httpOnly:true});
 				req.session.user = {'username':fields.username};
 				res.send('3');
 			}
@@ -95,10 +105,14 @@ app.post('/login', async(req, res) => {
 	});
 });
 
-app.get('/logout', function(req,res) {
-  req.session.destroy();
-  res.redirect('/');
+app.get('/logout', (req,res) => {
+	res.clearCookie('username');
+  	req.session.destroy();
+  	res.redirect('/');
 });
+
+
+
 
 app.get('/', (req, res) => {	// request for home page
 	let _user = null;
@@ -184,8 +198,61 @@ app.get('/*', (req, res) => {	// treating a general request
 });
 
 
-app.listen(process.env.PORT || 3000, () => {console.log("App running")});
+var server = app.listen(process.env.PORT || 3000, () => {console.log("App running")});
 
+searchingUsers = {};
+
+var io = socket(server);
+io.on('connection', async (socket) => {
+	
+  	var _username = stringToObject(socket.handshake.headers.cookie).username;
+  	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
+ 	_username = decipher.update(_username, 'hex', 'utf-8');
+ 	_username += decipher.final('utf-8');
+
+ 	let client = await pool.connect();
+	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
+
+	if(result.rows.length != 1) {
+		socket.emit('error');
+	}
+	else {
+	    var room = null;
+	    socket.on('searching',(data)=>{
+	    	
+	    	searchingUsers[_username] = "nothing"; //to upgrade later;
+	    	var flag = false;
+	    	
+	    	for(let user of Object.keys(searchingUsers)) {
+	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
+	    			flag = true;
+	    			socket.join(user);
+	    			room = user;
+	    			socket.to(user).emit('found', {username:_username});
+	    			socket.emit('found', {username:user});
+	    			delete searchingUsers[user];
+	    			delete searchingUsers[_username];
+	    		}
+	    	}
+	    	if(!flag) {
+	    		socket.join(_username);
+	    		room = _username;
+	    	}
+	    });
+
+	    socket.on('message', (data)=> {
+	    	io.in(room).emit('message',{username:_username,message:data.message});
+	    });
+
+	    socket.on('disconnect', ()=> {
+	    	if(room) {
+	    		io.in(room).emit('disconnectMessage',{username:_username});
+	    	}
+	    });
+	}
+   	
+
+});
 
 async function checkUsername(username) {
 	var response = {'msg':'', 'color':''};
@@ -280,7 +347,6 @@ async function sendEmail (_reciever, _subject, _html) {
   		}
 	});
 
-	console.log(transporter);
 	var mailOptions = {
   		from: 'rares.gabi.web@gmail.com',
   		to: _reciever,
@@ -295,4 +361,15 @@ async function sendEmail (_reciever, _subject, _html) {
     		console.log('Email sent: ' + info.response);
   		}
 	});
+}
+
+
+function stringToObject(string) {
+	let result = {};
+	for(let piece of string.split('; ')) {
+		let splitedPiece = piece.split('=');
+		result[splitedPiece[0]] = splitedPiece[1];
+	}
+
+	return result;
 }

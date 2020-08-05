@@ -1,52 +1,78 @@
+
 ul#menu {
-	overflow:hidden;
-	transition:0.3s all linear;
-	opacity:0.7;
+	z-index:2;
 	background-color:white;
-	z-index:1;
-	width:100%;
-	display:block;
 	position:sticky;
 	top:0;
-	border-bottom:1px solid black;
-	list-style-type:none;
-}
+	list-style-type: none; 
+	opacity:0.7;
+	transition: opacity 0.3s linear;
+	box-shadow:0px 8px 16px 0px rgba(0,0,0,0.4);
+}	
 
 ul#menu:hover {
 	opacity:1;
 }
 
-ul#menu>li {
-	transition:0.5s all linear;
-	
-	float:left;
-	text-align:center;
-	border-right:2px solid white;
+ul#menu > li {
+	display:inline-block;
+	transition:0.3s all linear;
+}
+
+ul#menu > li > a {
+	font-size:1.25rem;
+	text-decoration:none;
+	padding:14px 16px;
+	color:white;
 	display:block;
+	color:#6b90ff;
+	transition: 0.5s all;
 }
 
-ul#menu>li:last-child {
-	float:right;
-	border-right:none;
-	border-left:2px solid white;
-}
-
-ul#menu>li:hover {
-	cursor:pointer;
+ul#menu > li:hover {
 	background-color:#6b90ff;
 }
-ul#menu>li:hover>a {
+
+ul#menu > li:hover > a {
 	color:white;
 }
 
-ul#menu>li>a {
-	display:block;
-	transition:0.5s all linear;
-	text-decoration:none;
-	color:#6b90ff;
-	width:100%;
-	height:100%;
-	padding:14px 16px;
+ul#menu > li#drop {
+	float:right;
 }
 
+ul#menu > li#drop:hover ul#drop-menu {
+	display:block;
+}
 
+ul#menu > li#myAccount {
+	float:right;
+}
+
+ul#drop-menu {
+	list-style-type:none;
+	display:none;
+	position:absolute;
+	background-color:white;
+	right:0;
+	box-shadow:0px 8px 16px 0px rgba(0,0,0,0.4);
+}
+ul#drop-menu > li {
+	display:block;
+	transition:0.3s all linear;
+}
+ul#drop-menu > li > a {
+	display:block;
+	color:#6b90ff;
+	padding:14px 16px;
+	text-decoration:none;
+	text-align:center;
+	transition:0.3s all linear;
+}
+
+ul#drop-menu > li:hover {
+	background-color:#6b90ff;
+}
+ul#drop-menu > li:hover > a{
+	color:white;
+}

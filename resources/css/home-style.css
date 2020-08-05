@@ -44,11 +44,11 @@ span.letter {
 	font-size:10rem;
 	animation-duration:4s;
 }
-span.firstHalf {
-	animation-name:firstHalfAnimation;
+span.letter:nth-child(2n+1) {
+	animation-name:odd;
 }
-span.secondHalf {
-	animation-name:secondHalfAnimation;
+span.letter:nth-child(2n) {
+	animation-name:even;
 }
 
 
@@ -57,13 +57,13 @@ span.secondHalf {
 /* Keyframes for the animation */
 
 
-@keyframes firstHalfAnimation {
-	from{left:1500px;transform:rotate(0deg);}
-	to{left:0px;transform:rotate(-360deg);}
+@keyframes odd {
+	from{left:1500px;top:500px;transform:rotate(0deg);}
+	to{left:0px;top:0px;transform:rotate(-360deg);}
 }
-@keyframes secondHalfAnimation {
-	from{right:1500px;transform:rotate(0deg);}
-	to{right:0px;transform:rotate(360deg);}
+@keyframes even {
+	from{right:1500px;top:-500px;transform:rotate(0deg);}
+	to{right:0px;top:0px;transform:rotate(360deg);}
 }
 
 
@@ -181,14 +181,6 @@ a.joinButton {
 	}
 	div.joinDiv {
 		height:250px;
-	}
-	@keyframes firstHalfAnimation {
-		from{left:750px;transform:rotate(0deg);}
-		to{left:0px;transform:rotate(-360deg);}
-	}
-	@keyframes secondHalfAnimation {
-		from{right:750px;transform:rotate(0deg);}
-		to{right:0px;transform:rotate(360deg);}
 	}
 }
 

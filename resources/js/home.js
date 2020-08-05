@@ -1,5 +1,6 @@
 window.onload = () => {
-
+	setMinWidthOfMenu();
+	
 	var randomColors = ["#f42069", "#b4da55","#5cd6d6","#ff66cc","#ffff4d","tomato","#33cc33","#4d4dff","#ff99ff","#d68720"];
 	var letters = document.getElementsByClassName("letter");
 	for(let i = 0; i < letters.length; i++) {

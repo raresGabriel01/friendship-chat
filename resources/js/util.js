@@ -76,3 +76,21 @@ function submitForm() {
 		xhttp.send(params);
 	}
 }
+
+function setMinWidthOfMenu() {
+	let dropMenu = document.getElementById('drop-menu');
+	let dropLI = document.getElementById('drop');
+
+	if(dropMenu && dropLI) {
+		dropLI.addEventListener('mouseenter', (e) => {
+			dropMenu.style.display = 'block';
+			dropMenu.style.minWidth = dropLI.offsetWidth + 'px';
+		});
+
+		dropLI.addEventListener('mouseleave', (e) => {
+			dropMenu.style.display = 'none';
+		});
+	}
+}
+
+

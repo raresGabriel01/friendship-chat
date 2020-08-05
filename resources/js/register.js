@@ -4,6 +4,8 @@ var fields;
 var warnings;
 var submitWarning;
 window.onload = () => {
+	setMinWidthOfMenu();
+	;
 	username = document.getElementById('username');
 	email = document.getElementById('email');
 	password = document.getElementById('password');

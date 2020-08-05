@@ -35,6 +35,171 @@ a:hover {
 	text-align:center;
 }
 
+
+
+
+
+
+button.startChat {
+	position:relative;
+  display: block;
+  left:50%;
+  transform:translate(-50%);
+  border-radius: 12px;
+  background-color: #7ade3c;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width:300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button.startChat >  span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  margin:5px;
+}
+
+button.startChat > span:after {
+  content: '\01F4AC';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -30px;
+  transition: 0.5s;
+}
+
+button.startChat:hover > span {
+  padding-right: 40px;
+}
+
+button.startChat:hover > span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
+
+
+
+
+
+div#chatWrap {
+	/*margin:20px;*/
+	margin-top:30px;
+	margin-bottom:30px;
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	width:90%;
+	border:2px solid  rgb(107, 136, 198);
+	height:90vh;
+	padding:20px;
+}
+
+div#chatContent {
+	overflow-x: hidden;
+	overflow-y:scroll;
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	width:100%;
+	border:2px solid rgba(115, 176, 200, 0.67);
+	height:90%;
+}
+
+div#chatContent > div.message {
+	border-bottom:2px solid black;
+	width:100%;
+	padding:12px;
+}
+
+div#chatContent > div.message > p.username {
+	color:rgba(115, 176, 200, 0.67);
+}
+
+div#chatContent > div.message > p.message {
+	text-indent:10px;
+}
+
+div#chatContent > div.message > p.disconnectMessage {
+	color:red;
+	text-align:center;
+}
+
+div#chatWrap > input[type='text'] {
+	position:relative;
+	width:100%;
+	margin-top:20px;
+}
+
+
+.wide-image {
+	width:80%;
+	display:block;
+	margin:auto;
+	
+}
+
+p.title {
+	font-size:2rem;
+	text-align:center;
+}
+
+p.subtitle {
+	
+	font-size:1.5rem;
+	text-indent:75px;
+	margin-left:15px;
+	margin-top:20px;
+}
+p.subtitle > i.fa {
+	text-indent:0px;
+	margin-left:0px;
+}
+p.explain {
+	
+	margin-left:15px;
+	text-indent:25px;
+	
+}
+
+
+
+p.match {
+	text-align:center;
+	color:green;
+	opacity:1;
+	font-size:2rem;
+	position:relative;
+	top:0;
+	left:50%;
+	transform:translate(-50%,-50%);
+	animation-duration:2s;
+}
+p.fall {
+
+	animation-name:fall;
+	
+}
+p.slide {
+	animation-name:slide;
+	color:rgb(107, 136, 198);
+}
+@keyframes fall {
+	from{top:-500px;opacity:0;}
+	to{top:0;opacity:1;}
+}
+@keyframes slide {
+	from{left:800px;opacity:0;}
+	to{left:50%;opacity:1;}
+}
 @media only screen and (max-width:760px) {
 	.fa-ban {
 		font-size:10rem;
