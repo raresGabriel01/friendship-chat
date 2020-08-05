@@ -4,7 +4,7 @@ var chatContent;
 window.onload = () => {
 	setMinWidthOfMenu();
 	
-	socket = io.connect('http://localhost:3000');
+	socket = io.connect('https://friendship-chat.herokuapp.com/chat');
 	
 	socket.on('message', (data)=> {
 		chatContent.innerHTML+="<div class ='message'><p class ='username'>"+data.username+":</p>\
