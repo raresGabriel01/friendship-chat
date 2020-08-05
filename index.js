@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
+  connectionString:process.env.DATABASE_URL,
  
   ssl: {
     rejectUnauthorized: false
