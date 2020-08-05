@@ -218,7 +218,7 @@ io.on('connection', async (socket) => {
 	if(result.rows.length != 1) {
 		console.log("O eroare");
 		console.log(result.rows);
-		socket.emit('error');
+		socket.emit('eroare', {db:reuslt});
 	}
 	else {
 		console.log(_username);
