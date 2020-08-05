@@ -11,7 +11,7 @@ const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -217,14 +217,18 @@ io.on('connection', async (socket) => {
 		socket.emit('error');
 	}
 	else {
+		console.log("===============================================\nI'm here\n====================================\n");
+		console.log(searchingUsers);
 	    var room = null;
 	    socket.on('searching',(data)=>{
-	    	
+	    	console.log("---------------------------------------------------\nI'm searching\n------------------------------------\n");
+
 	    	searchingUsers[_username] = "nothing"; //to upgrade later;
 	    	var flag = false;
 	    	
 	    	for(let user of Object.keys(searchingUsers)) {
 	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
+	    			console.log('==================================================found it========================================\n');
 	    			flag = true;
 	    			socket.join(user);
 	    			room = user;
