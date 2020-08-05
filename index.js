@@ -212,24 +212,26 @@ io.on('connection', async (socket) => {
 
  	let client = await pool.connect();
 	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
-
+	console.log(result.rows);
+	console.log(_username);
 	if(result.rows.length != 1) {
 		console.log(result.rows);
 		socket.emit('error');
 	}
 	else {
-		console.log("===============================================\nI'm here\n====================================\n");
+		console.log(_username);
+		console.log("===============================================\nI'm here\n====================================");
 		console.log(searchingUsers);
 	    var room = null;
 	    socket.on('searching',(data)=>{
-	    	console.log("---------------------------------------------------\nI'm searching\n------------------------------------\n");
+	    	console.log("---------------------------------------------------\nI'm searching\n------------------------------------");
 
 	    	searchingUsers[_username] = "nothing"; //to upgrade later;
 	    	var flag = false;
 	    	
 	    	for(let user of Object.keys(searchingUsers)) {
 	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
-	    			console.log('==================================================found it========================================\n');
+	    			console.log('==================================================found it========================================');
 	    			flag = true;
 	    			socket.join(user);
 	    			room = user;
