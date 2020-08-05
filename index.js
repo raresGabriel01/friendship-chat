@@ -214,6 +214,7 @@ io.on('connection', async (socket) => {
 	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
 
 	if(result.rows.length != 1) {
+		console.log(result.rows);
 		socket.emit('error');
 	}
 	else {
