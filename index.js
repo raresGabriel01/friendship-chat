@@ -213,8 +213,10 @@ io.on('connection', async (socket) => {
  	let client = await pool.connect();
 	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
 	console.log(result.rows);
+	console.log(result.rows.length);
 	console.log(_username);
 	if(result.rows.length != 1) {
+		console.log("O eroare");
 		console.log(result.rows);
 		socket.emit('error');
 	}
