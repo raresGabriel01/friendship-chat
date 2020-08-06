@@ -14,7 +14,7 @@ window.onload = () => {
 		chatContent.innerHTML+="<div class ='message'><p class ='disconnectMessage'>" + data.username + " has disconnected </p></div>";
 	});
 
-	socket.on('eroare', (data) => {
+	socket.on('error', (data) => {
 		document.getElementById('pageContainer').innerHTML = data.db;
 	})
 }
@@ -23,7 +23,7 @@ function startChat() {
 	var pageContainer = document.getElementById('pageContainer');
 	pageContainer.innerHTML = '<div class ="loadWrapper"><div class ="loader"></div><p class ="mention">Searching...</p></div>'
 	
-	socket.emit('searching');
+	socket.emit('searching',{test:'hey'});
 	
 	socket.on('found', (data) => {
 		pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';

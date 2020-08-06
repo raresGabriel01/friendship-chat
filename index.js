@@ -204,7 +204,7 @@ searchingUsers = {};
 
 var io = socket(server);
 io.on('connection', async (socket) => {
-	
+
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
   	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
  	_username = decipher.update(_username, 'hex', 'utf-8');
@@ -212,28 +212,23 @@ io.on('connection', async (socket) => {
 
  	let client = await pool.connect();
 	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
-	console.log(result.rows);
-	console.log(result.rows.length);
-	console.log(_username);
+
 	if(result.rows.length != 1) {
-		console.log("O eroare");
-		console.log(result.rows);
-		socket.emit('eroare', {db:reuslt});
+		socket.emit('error', {err:'database error, please report this isssue'});
 	}
 	else {
-		console.log(_username);
-		console.log("===============================================\nI'm here\n====================================");
-		console.log(searchingUsers);
-	    var room = null;
-	    socket.on('searching',(data)=>{
-	    	console.log("---------------------------------------------------\nI'm searching\n------------------------------------");
 
+	    var room = null;
+	    socket.on('error', function (err) {
+    		socket.emit('error', {err:'server error'});
+    		console.log(err);
+		});
+	    socket.on('searching',(data)=>{
 	    	searchingUsers[_username] = "nothing"; //to upgrade later;
 	    	var flag = false;
 	    	
 	    	for(let user of Object.keys(searchingUsers)) {
 	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
-	    			console.log('==================================================found it========================================');
 	    			flag = true;
 	    			socket.join(user);
 	    			room = user;
