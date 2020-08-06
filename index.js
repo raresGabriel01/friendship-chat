@@ -215,15 +215,13 @@ io.on('connection', async (socket) => {
 
 	if(result.rows.length != 1) {
 		console.log("eroare db");
-		socket.emit('error', {err:'database error, please report this isssue'});
-
 	}
 	else {
 		console.log("fara eroare db");
 	    var room = null;
 	    socket.on('error', function (err) {
 	    	console.log("eroare la linia 225" + err);
-    		socket.emit('error', {err:'server error'});
+    		socket.emit('eroare', {eroare:err});
     		console.log(err);
 		});
 	    socket.on('searching',(data)=>{

@@ -14,8 +14,8 @@ window.onload = () => {
 		chatContent.innerHTML+="<div class ='message'><p class ='disconnectMessage'>" + data.username + " has disconnected </p></div>";
 	});
 
-	socket.on('error', (data) => {
-		document.getElementById('pageContainer').innerHTML = data.err;
+	socket.on('eroare', (data) => {
+		document.getElementById('pageContainer').innerHTML = data.eroare;
 	})
 }
 
