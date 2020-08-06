@@ -204,7 +204,7 @@ searchingUsers = {};
 
 var io = socket(server);
 io.on('connection', async (socket) => {
-
+	console.log("M am conectat");
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
   	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
  	_username = decipher.update(_username, 'hex', 'utf-8');
@@ -214,16 +214,20 @@ io.on('connection', async (socket) => {
 	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
 
 	if(result.rows.length != 1) {
+		console.log("eroare db");
 		socket.emit('error', {err:'database error, please report this isssue'});
+
 	}
 	else {
-
+		console.log("fara eroare db");
 	    var room = null;
 	    socket.on('error', function (err) {
+	    	console.log("eroare la linia 225" + err);
     		socket.emit('error', {err:'server error'});
     		console.log(err);
 		});
 	    socket.on('searching',(data)=>{
+	    	console.log("caut");
 	    	searchingUsers[_username] = "nothing"; //to upgrade later;
 	    	var flag = false;
 	    	
