@@ -203,7 +203,7 @@ var server = app.listen(process.env.PORT || 3000, () => {console.log("App runnin
 searchingUsers = {};
 
 var io = socket(server);
-io.on('connection', async (socket) => {
+io.on('connection', (socket) => {
 
 
 	socket.on('error', function (err) {
@@ -219,12 +219,6 @@ io.on('connection', async (socket) => {
  	_username = decipher.update(_username, 'hex', 'utf-8');
  	_username += decipher.final('utf-8');
 
- 	let client = await pool.connect();
-	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
-
-	if(result.rows.length != 1) {
-		console.log("eroare db");
-	}
 
 	console.log("fara eroare db");
 	var room = null;
