@@ -1,5 +1,5 @@
 
-var socket;
+var socket = io.connect('https://friendship-chat.herokuapp.com/chat');;
 var chatContent;
 var pageContainer;
 
@@ -8,7 +8,7 @@ window.onload = () => {
 	
     pageContainer = document.getElementById('pageContainer');
 
-	socket = io.connect('https://friendship-chat.herokuapp.com/chat');
+	
 	
 	socket.on('message', (data)=> {
 		chatContent.innerHTML+="<div class ='message'><p class ='username'>"+data.username+":</p>\
