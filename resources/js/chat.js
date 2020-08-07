@@ -3,7 +3,7 @@ var socket = io();
 var chatContent;
 var pageContainer;
 
-
+window.onload = () => {
 	setMinWidthOfMenu();
 	
     pageContainer = document.getElementById('pageContainer');
@@ -18,13 +18,11 @@ var pageContainer;
 		chatContent.innerHTML+="<div class ='message'><p class ='disconnectMessage'>" + data.username + " has disconnected </p></div>";
 	});
 
-	socket.on('eroare', (data) => {
-		document.getElementById('pageContainer').innerHTML = data.eroare;
+	socket.on('error', (data) => {
+		document.getElementById('pageContainer').innerHTML = data.error;
 	});
 
-	socket.on('waiting', (data) =>  {
-		console.log(data);
-	});
+
 
 	socket.on('found', (data) => {
 		pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';
@@ -39,7 +37,7 @@ var pageContainer;
 			let msg = document.getElementById('insertMessage');
 			msg.addEventListener('keydown', (e) => {
 				if(e.code == 'Enter') {
-					console.log('am trimis un mesaj');
+					
 					socket.emit('message', { message:msg.value});
 				}
 			});
@@ -48,12 +46,12 @@ var pageContainer;
 		
 	});
 
-
+}
 function startChat() {
 	
 	pageContainer.innerHTML = '<div class ="loadWrapper"><div class ="loader"></div><p class ="mention">Searching...</p></div>'
 	
-	socket.emit('search',{test:'hey'});
+	socket.emit('search');
 	
 }
 

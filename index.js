@@ -203,59 +203,59 @@ var server = app.listen(process.env.PORT || 3000, () => {console.log("App runnin
 searchingUsers = {};
 
 var io = socket(server);
-io.on('connection', (socket) => {
-
-
-	socket.on('error', function (err) {
-    	console.log(err);
+io.on('connection', async (socket) => {
+	
+	socket.on('error', (err) => {
+		socket.emit('error', {error:err});
 	});
 
-
-
-	console.log("M am conectat");
-	console.log(searchingUsers);
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
   	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
  	_username = decipher.update(_username, 'hex', 'utf-8');
  	_username += decipher.final('utf-8');
 
+ 	let client = await pool.connect();
+	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
 
-	console.log(_username);
-	var room = null;
+	if(result.rows.length != 1) {
+		socket.emit('error', {error:'Username not found'});
+	}
+	else {
 
-	socket.on('search',(data)=>{
-	    console.log("caut");
-	    searchingUsers[_username] = "nothing"; //to upgrade later;
-	    var flag = false;
+	    var room = null;
+	    socket.on('searching',(data)=>{
+
+	    	searchingUsers[_username] = "nothing"; //to upgrade later;
+	    	var flag = false;
 	    	
-	    for(let user of Object.keys(searchingUsers)) {
-	    	if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
-	    		flag = true;
-	    		socket.join(user);
-	    		room = user;
-	    		socket.to(user).emit('found', {username:_username});
-	    		socket.emit('found', {username:user});
-	    		delete searchingUsers[user];
-	    		delete searchingUsers[_username];
+	    	for(let user of Object.keys(searchingUsers)) {
+	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
+	    			
+	    			flag = true;
+	    			socket.join(user);
+	    			room = user;
+	    			socket.to(user).emit('found', {username:_username});
+	    			socket.emit('found', {username:user});
+	    			delete searchingUsers[user];
+	    			delete searchingUsers[_username];
+	    		}
 	    	}
-	    }
-	    if(!flag) {
-	    	socket.join(_username);
-	    	socket.emit('waiting', {test:'hey'});
-	    	room = _username;
-	    }
-	});
+	    	if(!flag) {
+	    		socket.join(_username);
+	    		room = _username;
+	    	}
+	    });
 
-	socket.on('message', (data)=> {
-	    io.in(room).emit('message',{username:_username,message:data.message});
-	});
+	    socket.on('message', (data)=> {
+	    	io.in(room).emit('message',{username:_username,message:data.message});
+	    });
 
-	socket.on('disconnect', ()=> {
-	    if(room) {
-	    	io.in(room).emit('disconnectMessage',{username:_username});
-	    }
-	});
-	
+	    socket.on('disconnect', ()=> {
+	    	if(room) {
+	    		io.in(room).emit('disconnectMessage',{username:_username});
+	    	}
+	    });
+	}
    	
 
 });
