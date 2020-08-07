@@ -213,6 +213,7 @@ io.on('connection', async (socket) => {
 
 
 	console.log("M am conectat");
+	console.log(searchingUsers);
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
   	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
  	_username = decipher.update(_username, 'hex', 'utf-8');
@@ -228,7 +229,7 @@ io.on('connection', async (socket) => {
 	console.log("fara eroare db");
 	var room = null;
 
-	socket.on('searching',(data)=>{
+	socket.on('search',(data)=>{
 	    console.log("caut");
 	    searchingUsers[_username] = "nothing"; //to upgrade later;
 	    var flag = false;

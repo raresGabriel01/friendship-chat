@@ -23,7 +23,7 @@ function startChat() {
 	var pageContainer = document.getElementById('pageContainer');
 	pageContainer.innerHTML = '<div class ="loadWrapper"><div class ="loader"></div><p class ="mention">Searching...</p></div>'
 	
-	socket.emit('searching',{test:'hey'});
+	socket.emit('search',{test:'hey'});
 	
 	socket.on('found', (data) => {
 		pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';
