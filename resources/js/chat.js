@@ -1,5 +1,5 @@
 
-var socket = io.connect('https://friendship-chat.herokuapp.com/chat');;
+var socket = io.connect('https://friendship-chat.herokuapp.com/chat');
 var chatContent;
 var pageContainer;
 
