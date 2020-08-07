@@ -22,6 +22,9 @@ window.onload = () => {
 		document.getElementById('pageContainer').innerHTML = data.eroare;
 	});
 
+	socket.on('waiting', (data) =>  {
+		console.log(data);
+	});
 
 	socket.on('found', (data) => {
 		pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';

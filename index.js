@@ -241,6 +241,7 @@ io.on('connection', (socket) => {
 	    }
 	    if(!flag) {
 	    	socket.join(_username);
+	    	socket.emit('waiting', {test:'hey'});
 	    	room = _username;
 	    }
 	});
