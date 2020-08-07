@@ -223,7 +223,7 @@ io.on('connection', async (socket) => {
 	else {
 
 	    var room = null;
-	    socket.on('searching',(data)=>{
+	    socket.on('search',(data)=>{
 
 	    	searchingUsers[_username] = "nothing"; //to upgrade later;
 	    	var flag = false;
