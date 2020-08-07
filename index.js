@@ -220,7 +220,7 @@ io.on('connection', (socket) => {
  	_username += decipher.final('utf-8');
 
 
-	console.log("fara eroare db");
+	console.log(_username);
 	var room = null;
 
 	socket.on('search',(data)=>{

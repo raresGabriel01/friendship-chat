@@ -3,7 +3,7 @@ var socket = io.connect('https://friendship-chat.herokuapp.com/chat');;
 var chatContent;
 var pageContainer;
 
-window.onload = () => {
+
 	setMinWidthOfMenu();
 	
     pageContainer = document.getElementById('pageContainer');
@@ -47,7 +47,7 @@ window.onload = () => {
 		},2500);
 		
 	});
-}
+
 
 function startChat() {
 	
