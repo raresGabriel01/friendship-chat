@@ -206,9 +206,9 @@ var io = socket(server);
 io.on('connection', async (socket) => {
 
 
-	    socket.on('error', function (err) {
-    		console.log(err);
-		});
+	socket.on('error', function (err) {
+    	console.log(err);
+	});
 
 
 
@@ -224,42 +224,42 @@ io.on('connection', async (socket) => {
 	if(result.rows.length != 1) {
 		console.log("eroare db");
 	}
-	else {
-		console.log("fara eroare db");
-	    var room = null;
 
-	    socket.on('searching',(data)=>{
-	    	console.log("caut");
-	    	searchingUsers[_username] = "nothing"; //to upgrade later;
-	    	var flag = false;
+	console.log("fara eroare db");
+	var room = null;
+
+	socket.on('searching',(data)=>{
+	    console.log("caut");
+	    searchingUsers[_username] = "nothing"; //to upgrade later;
+	    var flag = false;
 	    	
-	    	for(let user of Object.keys(searchingUsers)) {
-	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
-	    			flag = true;
-	    			socket.join(user);
-	    			room = user;
-	    			socket.to(user).emit('found', {username:_username});
-	    			socket.emit('found', {username:user});
-	    			delete searchingUsers[user];
-	    			delete searchingUsers[_username];
-	    		}
+	    for(let user of Object.keys(searchingUsers)) {
+	    	if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
+	    		flag = true;
+	    		socket.join(user);
+	    		room = user;
+	    		socket.to(user).emit('found', {username:_username});
+	    		socket.emit('found', {username:user});
+	    		delete searchingUsers[user];
+	    		delete searchingUsers[_username];
 	    	}
-	    	if(!flag) {
-	    		socket.join(_username);
-	    		room = _username;
-	    	}
-	    });
+	    }
+	    if(!flag) {
+	    	socket.join(_username);
+	    	room = _username;
+	    }
+	});
 
-	    socket.on('message', (data)=> {
-	    	io.in(room).emit('message',{username:_username,message:data.message});
-	    });
+	socket.on('message', (data)=> {
+	    io.in(room).emit('message',{username:_username,message:data.message});
+	});
 
-	    socket.on('disconnect', ()=> {
-	    	if(room) {
-	    		io.in(room).emit('disconnectMessage',{username:_username});
-	    	}
-	    });
-	}
+	socket.on('disconnect', ()=> {
+	    if(room) {
+	    	io.in(room).emit('disconnectMessage',{username:_username});
+	    }
+	});
+	
    	
 
 });
