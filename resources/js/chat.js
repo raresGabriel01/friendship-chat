@@ -1,9 +1,13 @@
 
 var socket;
 var chatContent;
+var pageContainer;
+
 window.onload = () => {
 	setMinWidthOfMenu();
 	
+    pageContainer = document.getElementById('pageContainer');
+
 	socket = io.connect('https://friendship-chat.herokuapp.com/chat');
 	
 	socket.on('message', (data)=> {
@@ -16,15 +20,9 @@ window.onload = () => {
 
 	socket.on('eroare', (data) => {
 		document.getElementById('pageContainer').innerHTML = data.eroare;
-	})
-}
+	});
 
-function startChat() {
-	var pageContainer = document.getElementById('pageContainer');
-	pageContainer.innerHTML = '<div class ="loadWrapper"><div class ="loader"></div><p class ="mention">Searching...</p></div>'
-	
-	socket.emit('search',{test:'hey'});
-	
+
 	socket.on('found', (data) => {
 		pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';
 		setTimeout(()=>{
@@ -46,9 +44,18 @@ function startChat() {
 		},2500);
 		
 	});
-
-
-
 }
+
+function startChat() {
+	
+	pageContainer.innerHTML = '<div class ="loadWrapper"><div class ="loader"></div><p class ="mention">Searching...</p></div>'
+	
+	socket.emit('search',{test:'hey'});
+	
+}
+
+
+
+
 
 
