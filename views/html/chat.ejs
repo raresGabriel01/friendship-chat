@@ -19,7 +19,7 @@
 				<p class = 'mention'> You can log in by clicking <a href = 'javascript:void(0)' onclick = 'displayLoginForm()'> here </a> </p>
 				<p class = 'mention'> If you don't have an account you can register by clicking <a href = '/register'> here </a> </p>
 			<% } else { %>
-				<p class = 'title'> Start chatting right with just the click of a button ! </p>
+				<p class = 'title'> Start chatting right now with just the click of a button ! </p>
 				<img src = '/img/socializing.jpg' class = 'wide-image'/>
 				<button class ='startChat' onclick = 'startChat()'> <span>Start Chatting </span></button>
 				
@@ -37,7 +37,9 @@
 		</div>
 		<%- include('../pieces/footer.ejs') %>
 	</div>
-	<script src="/socket.io/socket.io.js"></script>
-	<script type = 'text/javascript' src = '/js/chat.js'></script>
+	<% if(locals.user) { %>
+		<script src="/socket.io/socket.io.js"></script>
+		<script type = 'text/javascript' src = '/js/chat.js'></script>
+	<%}%>
 </body>
 </html>

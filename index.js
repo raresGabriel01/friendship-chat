@@ -6,12 +6,13 @@ const session = require('express-session');
 const path = require('path');
 const formidable = require("formidable");
 const crypto = require("crypto");
+const fs = require('fs');
 const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString:process.env.DATABASE_URL,
+  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -176,6 +177,70 @@ app.get('/confirm', async (req,res) => {
 	}
 });
 
+app.get('/profile', async (req, res) => {
+	let _user = null;
+	if(req.session) {
+		if(req.session.user) {
+			_user = req.session.user;
+		}
+	}
+
+	if(_user) {
+		let client = await pool.connect();
+		let result = await client.query("SELECT hobbies FROM users WHERE username = '" + _user.username + "';");
+		let _hobbies = result.rows[0].hobbies.split(' ');
+		res.render('html/profile', {user:_user, hobbies:_hobbies});
+	}
+	else {
+		res.redirect('/404');
+	}
+});
+
+app.post('/updateHobbies', (req, res) => {
+	var form = new formidable.IncomingForm();
+	form.parse(req, async(err, fields, files) =>{
+		let client = await pool.connect();
+		if(fields.action == 'add') {
+			await client.query("UPDATE users SET hobbies = CONCAT (hobbies, '"+fields.hobbies+"') WHERE username = '" + req.session.user.username +"';");
+		}
+		else {
+			await client.query("UPDATE users SET hobbies = REPLACE(hobbies,'" + fields.hobby + "', '') WHERE username = '" +req.session.user.username+"';");
+		}
+	});
+});
+
+
+app.post('/uploadAvatar', function (req, res){
+    var form = new formidable.IncomingForm();
+
+    form.parse(req);
+
+    const username = req.session.user.username;
+    const path = '/user_uploads/' + username;
+
+	form.on('fileBegin', (name, file) =>{
+		//ca sa salvam la locatia dorita setam campul path al lui file
+		
+		if(file && file.name!=""){
+			fs.mkdirSync(process.cwd() + path, {recursive:true}, (error) => {
+				if(error) {
+					console.log("error here ===> "  + error);
+				}
+			});
+			file.path = process.cwd() + path + '/avatar.jpg';
+		}
+	});
+	form.on('file',function(name, file){
+		console.log("Confirmare upload");
+		console.log(name);
+		console.log(file.name);
+	});
+
+
+	res.redirect('/profile');
+});
+
+
 app.get('/*', (req, res) => {	// treating a general request 
 	let _user = null;
 	if(req.session){
@@ -254,6 +319,7 @@ io.on('connection', async (socket) => {
 	    	if(room) {
 	    		io.in(room).emit('disconnectMessage',{username:_username});
 	    	}
+	    	delete searchingUsers[_username];
 	    });
 	}
    	

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<%-include('../pieces/head-content.ejs') %>
+	<link rel ='stylesheet' type ='text/css' href = '/css/profile-style.css'/>
+	<script src = '/js/profile.js'> </script>
+</head>
+<body id = 'body'>
+	<div id = 'pageContainer'>
+		<%-include('../pieces/menu.ejs') %>
+		<div id = 'contentWrap'>
+			
+			<h1> <%=locals.user.username %> </h1>
+			<div class = 'grid'>
+				<img src = '/img/profile.jpg' id = 'profileImage'/>
+				<section>
+					<div class = 'wrap'>
+						<p>Your avatar says a lot about you, choose it carefully !</p> 
+						<form method="post" action="/uploadAvatar"  enctype="multipart/form-data">
+							<input type="file" name="filetoupload" id ='uploadButton' accept = 'image/*' onchange = 'imageUpload(event)'/>
+							<label for = 'uploadButton' id = 'upload'><i class="fa fa-upload" aria-hidden="true"></i> Upload a new avatar </label>
+							<input type="submit" value="Submit" id = 'submitAvatar'>
+						</form>
+					</div>
+				</section>
+				<section class = 'fullRow'>
+					<div class ='wrap'>
+						<p> Don't forget about your hobbies! The keywords you will type in here will be used to find a chat partner. Don't think too much about it, just type the things you enjoy doing. </p>
+					</div>
+				</section>
+				<section class = 'fullRow' id = 'hobbies'>
+					<% for(let hobby of locals.hobbies) { %>
+						<%if(hobby != '' && hobby.trim() != '') { %>
+						<span class = 'hobby'> <%=hobby%> <i class="fa fa-times-circle" aria-hidden="true"></i></span>
+						<%}%>
+					<%}%>
+				</section>
+				<section class ='fullRow'>
+					<div class = 'wrap'>
+						<i class="fa fa-pencil-square-o" aria-hidden="true" id = 'editHobbies'></i>
+						<p> Click here to add some hobbies </p>
+					</div>
+				</section>
+			</div>
+		</div>
+		<%-include('../pieces/footer.ejs')%>
+	</div>
+</body>
+</html>
