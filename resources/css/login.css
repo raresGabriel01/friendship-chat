@@ -71,7 +71,7 @@ input[type='submit'].loginButton , input[type='button'].loginButton{
 	transition:0.5s all linear;
 }
 
-input[type='submit']:hover, input[type='button'].loginButton:hover {
+input[type='submit'].loginButton:hover, input[type='button'].loginButton:hover {
 	cursor:pointer;
 	color:#349799;
 	background-color:white;
