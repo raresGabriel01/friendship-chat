@@ -207,6 +207,7 @@ app.post('/updateHobbies',async (req, res) => {
 			await client.query("UPDATE users SET hobbies = REPLACE(hobbies,'" + fields.hobby + "', '') WHERE username = '" +req.session.user.username+"';");
 		}
 	});
+	res.send('ok');
 });
 
 
