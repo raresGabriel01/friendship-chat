@@ -12,7 +12,7 @@ const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString:process.env.DATABASE_URL,
+  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -220,28 +220,31 @@ app.post('/updateHobbies',async (req, res) => {
 
 app.post('/uploadAvatar', async function (req, res){
     var form = new formidable.IncomingForm();
-
+    console.log('new form')
     form.parse(req);
 
     const username = req.session.user.username;
+    console.log('username====>',username)
     const path = '/user_uploads/' + username;
-
+    console.log(path)
 	form.on('fileBegin', (name, file) =>{
 		//ca sa salvam la locatia dorita setam campul path al lui file
-		
+		console.log('on file begin')
 		if(file && file.name!=""){
+			console.log('file && file!=""')
 			fs.mkdirSync(process.cwd() + path, {recursive:true}, (error) => {
 				if(error) {
 					console.log("error here ===> "  + error);
 				}
 			});
 			file.path = process.cwd() + path + '/avatar.jpg';
+			console.log(file.path);
 		}
 	});
 	form.on('file',function(name, file){
 		console.log("Confirmare upload");
 	});
-
+console.log('ajungptreredirect');
 
 	res.redirect('/profile');
 });
