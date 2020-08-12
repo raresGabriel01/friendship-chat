@@ -218,7 +218,7 @@ app.post('/updateHobbies',async (req, res) => {
 });
 
 
-app.post('/uploadAvatar', function (req, res){
+app.post('/uploadAvatar', async function (req, res){
     var form = new formidable.IncomingForm();
 
     form.parse(req);
