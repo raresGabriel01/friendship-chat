@@ -37,6 +37,12 @@ app.use(session({
 
 
 
+
+
+
+
+
+
 app.post('/registerNewUser',async (req,res)=> {
 	var form = new formidable.IncomingForm();
 	form.parse(req, async (err, fields, files) => {
@@ -194,6 +200,7 @@ app.get('/profile', async (req, res) => {
 	else {
 		res.redirect('/404');
 	}
+
 });
 
 app.post('/updateHobbies',async (req, res) => {
@@ -201,7 +208,7 @@ app.post('/updateHobbies',async (req, res) => {
 	form.parse(req, async(err, fields, files) =>{
 		let client = await pool.connect();
 		if(fields.action == 'add') {
-			await client.query("UPDATE users SET hobbies = CONCAT (hobbies, '"+fields.hobbies+"') WHERE username = '" + req.session.user.username +"';");
+			await client.query("UPDATE users SET hobbies = CONCAT (hobbies, ' "+fields.hobbies+"') WHERE username = '" + req.session.user.username +"';");
 		}
 		else {
 			await client.query("UPDATE users SET hobbies = REPLACE(hobbies,'" + fields.hobby + "', '') WHERE username = '" +req.session.user.username+"';");
@@ -233,14 +240,25 @@ app.post('/uploadAvatar', function (req, res){
 	});
 	form.on('file',function(name, file){
 		console.log("Confirmare upload");
-		console.log(name);
-		console.log(file.name);
 	});
 
 
 	res.redirect('/profile');
 });
 
+app.get('/getAvatar', async (req, res) => {
+	console.log('pe server');
+	//res.sendFile(process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg', (err) => {
+	//	res.sendFile(process.cwd() + '/resources/img/profile.jpg');
+	//});
+	let url = process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg';
+	fs.readFile(url, 'base64', (err,base64Image) => {
+		const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+		res.send(`${dataUrl}`);
+	});
+	
+	
+});
 
 app.get('/*', (req, res) => {	// treating a general request 
 	let _user = null;

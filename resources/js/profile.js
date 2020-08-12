@@ -1,7 +1,9 @@
+
 window.onload = () => {
 	var body = document.getElementById('body');
 	hobbies();
 	updateHobbyEvents();
+	getAvatar();
 }
 
 
@@ -67,8 +69,7 @@ function updateHobbyEvents() {
 	for(let el of x) {
 		el.addEventListener('click', (e)=>{
 			let parent = el.parentNode;
-			console.log(parent);
-			console.log(parent.innerText);
+			
 			let xhttp = new XMLHttpRequest();
 			xhttp.open('POST', '/updateHobbies', true);
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -84,6 +85,20 @@ function updateHobbyEvents() {
 function imageUpload(e) {
 	let files = e.target.files;
 	let file = files[0];
-	console.log(file.name);
+	
 	document.getElementById('upload').innerText = file.name;
+}
+
+function getAvatar() {
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.status == 200 && this.readyState == 4) {
+
+			document.getElementById('profileImage').src = this.response;
+		}
+	}
+	xhttp.open('GET', '/getAvatar', true);
+	//xhttp.setRequestHeader()
+	xhttp.send();
+
 }
