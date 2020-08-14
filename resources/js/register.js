@@ -4,8 +4,8 @@ var fields;
 var warnings;
 var submitWarning;
 window.onload = () => {
-	setMinWidthOfMenu();
-	;
+	modifyMenu();
+	
 	username = document.getElementById('username');
 	email = document.getElementById('email');
 	password = document.getElementById('password');
@@ -126,6 +126,8 @@ function checkEmail(email) {
 	xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
 			let json = JSON.parse(this.responseText);
+			console.log(this.responseText);
+			console.log('o muie');
 			emailWarning.style.color = json.color;
 			emailWarning.innerText = json.msg;
 		}

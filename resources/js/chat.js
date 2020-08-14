@@ -4,7 +4,7 @@ var chatContent;
 var pageContainer;
 
 
-setMinWidthOfMenu();
+modifyMenu();
 	
 pageContainer = document.getElementById('pageContainer');
 

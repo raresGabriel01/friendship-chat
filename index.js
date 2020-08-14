@@ -12,7 +12,7 @@ const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const pool = new Pool({
-  connectionString:process.env.DATABASE_URL,
+  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -66,9 +66,16 @@ app.post('/registerNewUser',async (req,res)=> {
 							<p style="text-align:center;font-size:18px;"> You are just a step away from being able to use our platform </p>\
 							<p style="text-align:center;font-size:18px;"> To confirm your registration, click <a href=\"'+ textLink.toString() + '\"> here </a> </p>\
 							<p style="text-align:center;font-size:18px;"> If you do not remember registering to our website, please report it <a href=\"'+ reportLink.toString() + '\"> here </a> </p>'
-				await sendEmail(fields.email, 'Confirm your registration', html);
+				try {
+					let emailResponse = await sendEmail(fields.email, 'Confirm your registration', html);
+					res.send('emailResponse');
+				}
+				catch(error) {
+					res.send('error');
+				}
+				
 
-				res.send('OK');
+				
 			}
 			catch(err) {
 				res.send('NOT OK');
@@ -148,6 +155,7 @@ app.get('/checkUsername', async (req, res) => {
 
 
 app.get('/checkEmail', async(req, res) => {
+	console.log('check mail req')
 	let email = req.query.email;
 	if(email.length > 150) {
 		res.json({'msg':'Your email adress is too long','color':'red'});
@@ -159,6 +167,7 @@ app.get('/checkEmail', async(req, res) => {
 	else {
 		res.json(response);
 	}
+	console.log(response);
 });
 
 app.get('/confirm', async (req,res) => {
@@ -218,32 +227,30 @@ app.post('/updateHobbies',async (req, res) => {
 });
 
 
-app.post('/uploadAvatar', async function (req, res){
+app.post('/uploadAvatar', async (req, res)=> {
     var form = new formidable.IncomingForm();
-    console.log('new form')
+    
     form.parse(req);
 
     const username = req.session.user.username;
-    console.log('username====>',username)
+    
     const path = '/user_uploads/' + username;
-    console.log(path)
+    
 	form.on('fileBegin', (name, file) =>{
 		//ca sa salvam la locatia dorita setam campul path al lui file
-		console.log('on file begin')
+		
 		if(file && file.name!=""){
-			console.log('file && file!=""')
+			
 			fs.mkdirSync(process.cwd() + path, {recursive:true}, (error) => {
 				if(error) {
 					console.log("error here ===> "  + error);
 				}
 			});
 			file.path = process.cwd() + path + '/avatar.jpg';
-			console.log(file.path);
+			
 		}
 	});
 	form.on('file',function(name, file){
-		console.log("Confirmare upload");
-		console.log('ajungptreredirect');
 		res.redirect('/profile');
 	});
 
@@ -252,14 +259,38 @@ app.post('/uploadAvatar', async function (req, res){
 });
 
 app.get('/getAvatar', async (req, res) => {
-	console.log('pe server');
+	console.log('help me');
 	//res.sendFile(process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg', (err) => {
 	//	res.sendFile(process.cwd() + '/resources/img/profile.jpg');
 	//});
-	let url = process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg';
+	//let url = process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg';
+	let _username = null;
+	if(req.session) {
+		if(req.session.user) {
+			_username = req.session.user.username;
+		}
+	}
+
+	var url = null;
+
+	if(_username) {
+		url = process.cwd() + '/user_uploads/' + _username + '/avatar.jpg';
+	}
+	else {
+		url = process.cwd() + '/resources/img/profile.jpg';
+	}
 	fs.readFile(url, 'base64', (err,base64Image) => {
-		const dataUrl = `data:image/jpeg;base64,${base64Image}`;
-		res.send(`${dataUrl}`);
+		
+		if(!base64Image) {
+			
+			res.send('Not found');
+		}
+		else {
+			
+			const dataUrl = `data:image/jpeg;base64,${base64Image}`;
+			res.send(`${dataUrl}`);			
+		}
+
 	});
 	
 	
@@ -377,7 +408,7 @@ async function checkUsername(username) {
 
 
 async function checkEmail (email) {
-
+	console.log('hey, im here');
 	var response = {'msg':'', 'color':''};
 	try {
 		var client = await pool.connect();
@@ -439,7 +470,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: process.env.EMAIL_PASSWORD
+    		pass: 'parola123*'
   		}
 	});
 
@@ -452,8 +483,9 @@ async function sendEmail (_reciever, _subject, _html) {
 
 	transporter.sendMail(mailOptions, function(error, info){
   		if (error) {
-    		console.log(error);
+    		return 'error';
   		} else {
+  			return 'OK';
     		console.log('Email sent: ' + info.response);
   		}
 	});

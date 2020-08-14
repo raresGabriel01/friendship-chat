@@ -1,7 +1,8 @@
 
 ul#menu {
+	
 	z-index:2;
-	background-color:white;
+	background-color:#405c78;
 	position:sticky;
 	top:0;
 	list-style-type: none; 
@@ -20,21 +21,21 @@ ul#menu > li {
 }
 
 ul#menu > li > a {
-	font-size:1.25rem;
+	font-size:1.35rem;
 	text-decoration:none;
-	padding:14px 16px;
+	padding:18px 20px;
 	color:white;
 	display:block;
-	color:#6b90ff;
+	
 	transition: 0.5s all;
 }
 
 ul#menu > li:hover {
-	background-color:#6b90ff;
+	background-color:white;
 }
 
 ul#menu > li:hover > a {
-	color:white;
+	color:#405c78;
 }
 
 ul#menu > li#drop {
@@ -63,7 +64,7 @@ ul#drop-menu > li {
 }
 ul#drop-menu > li > a {
 	display:block;
-	color:#6b90ff;
+	color:#405c78;
 	padding:14px 16px;
 	text-decoration:none;
 	text-align:center;
@@ -71,7 +72,7 @@ ul#drop-menu > li > a {
 }
 
 ul#drop-menu > li:hover {
-	background-color:#6b90ff;
+	background-color:#405c78;
 }
 ul#drop-menu > li:hover > a{
 	color:white;

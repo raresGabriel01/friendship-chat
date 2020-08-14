@@ -77,11 +77,13 @@ function submitForm() {
 	}
 }
 
-function setMinWidthOfMenu() {
+function modifyMenu() {
+	console.log('hey');
 	let dropMenu = document.getElementById('drop-menu');
 	let dropLI = document.getElementById('drop');
 
 	if(dropMenu && dropLI) {
+		console.log('test');
 		dropLI.addEventListener('mouseenter', (e) => {
 			dropMenu.style.display = 'block';
 			dropMenu.style.minWidth = dropLI.offsetWidth + 'px';
@@ -90,6 +92,25 @@ function setMinWidthOfMenu() {
 		dropLI.addEventListener('mouseleave', (e) => {
 			dropMenu.style.display = 'none';
 		});
+
+
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if(this.status == 200 && this.readyState == 4) {
+			let menuProfileImage = document.getElementById('menuProfileImage');
+			if(this.responseText == 'Not found') {
+				menuProfileImage.src = '/img/profile.jpg';
+			}
+			else {
+				
+				menuProfileImage.src = this.response;
+			}
+			
+		}
+	}
+	xhttp.open('GET', '/getAvatar', true);
+	//xhttp.setRequestHeader()
+	xhttp.send();
 	}
 }
 

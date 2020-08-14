@@ -3,13 +3,15 @@
 <head>
 	<%-include('../pieces/head-content.ejs') %>
 	<link rel ='stylesheet' type ='text/css' href = '/css/404-style.css'/>
+	<script src = '/js/404.js'></script>
 </head>
 <body id = 'body'>
 	<div id = 'pageContainer'>
+		<%-include('../pieces/menu.ejs') %>
 		<div id = 'contentWrap'>
-			<%-include('../pieces/menu.ejs') %>
-			<img src='/img/nomemory.gif'/>
-			<h1> Sorry, but you might be looking for something else... </h1>
+			<h1> Error 404 </h1>
+			<img id = 'lost' src='/img/nomemory.gif'/>
+			<h2> Sorry, but you might be looking for something else... </h1>
 		</div>
 		<%-include('../pieces/footer.ejs')%>
 	</div>

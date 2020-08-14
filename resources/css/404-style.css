@@ -8,10 +8,14 @@
 h1 {
 	font-size:2rem;
 	text-align:center;
+}
+h2 {
+	font-size:1.8rem;
+	text-align:center;
 	margin:50px;
 }
 
-img {
+img#lost {
 	width:50%;
 	display:block;
 	margin:20px auto 20px auto;

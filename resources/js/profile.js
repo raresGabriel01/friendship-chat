@@ -1,6 +1,8 @@
 
 window.onload = () => {
 	var body = document.getElementById('body');
+	modifyMenu();
+	setAvatarHeight();
 	hobbies();
 	updateHobbyEvents();
 	getAvatar();
@@ -93,12 +95,24 @@ function getAvatar() {
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() {
 		if(this.status == 200 && this.readyState == 4) {
-
-			document.getElementById('profileImage').src = this.response;
+			let profileImage = document.getElementById('profileImage');
+			if(this.responseText == 'Not found') {
+				profileImage.src = '/img/profile.jpg';
+			}
+			else {
+				
+				profileImage.src = this.response;
+			}
+			
 		}
 	}
 	xhttp.open('GET', '/getAvatar', true);
 	//xhttp.setRequestHeader()
 	xhttp.send();
 
+}
+
+function setAvatarHeight() {
+	let profileImage = document.getElementById('profileImage');
+	profileImage.style.height = profileImage.offsetWidth + 'px';
 }

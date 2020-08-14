@@ -2,24 +2,32 @@
 	margin:0;
 	padding:0;
 	font-size:22px;
-	font-family:"Comic Sans MS", cursive, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	box-sizing: border-box;
+	
 }
 a {
 	-webkit-tap-highlight-color: transparent;
 }
 
 div#pageContainer {
-	position:relative;
+	background-color:#f0f0f0;
 	min-height:100vh;
+	position:relative;
 }
 
 div#contentWrap {
-	padding-bottom:500px;
+	box-shadow:0px 0px 10px lightgrey;
+	background-color:white;
+	padding:75px 20px 600px 20px;
+	width:70%;
 	position:relative;
-
+	left:50%;
+	transform:translate(-50%);
+	border-right:1px solid lightgrey;
+	border-left:1px solid lightgrey;
+	
 }
-
 
 .loader {
 	margin:20px;

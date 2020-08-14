@@ -11,8 +11,9 @@
 </head>
 <body id = 'body'>
 	<div id = 'pageContainer'>
+		<%- include('../pieces/menu.ejs') %>
 		<div id = 'contentWrap'>
-			<%- include('../pieces/menu.ejs') %>
+			
 			<% if(!locals.user) { %>
 				<i class="fa fa-ban" aria-hidden="true"></i>
 				<p class = 'unregistered'> Sorry, but you can't access the chat if you're not logged in ! </p>

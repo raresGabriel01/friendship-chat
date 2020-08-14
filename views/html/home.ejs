@@ -7,72 +7,79 @@
 	
 </head>
 <body id = 'body'>
-	<div class = 'banner'>
-		<div class='text'>
-			<span class ='letter firstHalf'>F</span>
-			<span class ='letter firstHalf'>r</span>
-			<span class ='letter firstHalf'>i</span>
-			<span class ='letter firstHalf'>e</span>
-			<span class ='letter firstHalf'>n</span>
-			<span class ='letter secondHalf'>d</span>
-			<span class ='letter secondHalf'>s</span>
-			<span class ='letter secondHalf'>h</span>
-			<span class ='letter secondHalf'>i</span>
-			<span class ='letter secondHalf'>p</span>
-		</div>
-	</div>
 	<div id = 'pageContainer'>
-	<div id ='contentWrap'>
-		<%-include('../pieces/menu.ejs') %>
 
-		<p class ='caption'> The oportunity to find new friends at your fingertips ! </p>
-		<div class =' quoteWrapper'>
-			<p class = 'caption' id = 'quote'> </p>
+			<div class ='banner'>
+					<div class ='textWrap'>
+						<h1 class = 'titleText'> Friendship </h1>
+						<span class = 'titleText'> Click. Chat. Make friends</span>
+					</div>
+					
+				</div>
+				
+				<%-include('../pieces/menu.ejs')%>
+				<aside class = 'right'>
+					<p id='randomQuote'> </p>
+					<p> Our website is still in a testing phase. If you encounter any problem please check our contacts below and and do not hesitate to inform us </p>
+					<p class = 'contact'><i class="fa fa-facebook-square" aria-hidden="true"></i> Băeşu Rareş Gabriel </p>
+					<p class = 'contact'><i class="fa fa-instagram" aria-hidden="true"></i> rares.01</p>
+					<p class = 'contact'><i class="fa fa-envelope" aria-hidden="true"></i> baesu_r@yahoo.com </p>
+
+				</aside>
+				<aside class = 'left'>
+					<p> Do you feel down ? Remember there is always a solution </p>
+					<a href = 'http://www.antisuicid.com/'> National Antisuicide Helpline </a>
+					<a href ='https://suicidepreventionlifeline.org/talk-to-someone-now/'> Suicide Prevention Lifeline </a>
+					<a href = 'https://psychcentral.com/lib/suicide-helpline-suicide-resources/'> Psych Central Sucide Helpline </a>
+					<a href = 'https://www.nhs.uk/conditions/suicide/'> NHS Help for Suicidal Thoughts </a>
+					<a href= 'https://www.betterhelp.com/helpme/?utm_source=AdWords&utm_medium=Search_PPC_c&utm_term=depression+helpline_e&utm_content=42503666777&network=g&placement=&target=&matchtype=e&utm_campaign=861113656&ad_type=text&adposition=&gclid=Cj0KCQjw7Nj5BRCZARIsABwxDKKC9elSL-wjZSYoIKxAT4T7842-07Vll5e7R7AWbIdlGCpjKCHoVR8aArciEALw_wcB&not_found=1&gor=helpme'> Depression Help Online </a>
+					<a href= 'https://www.mentalhelp.net/depression/hotline/'> Depression Hotline Number </a>
+					<p> TelVerde antidepresie:</p>
+					<p class ='phoneNumber'> <i class="fa fa-phone" aria-hidden="true"></i> 0800 0800 20</p>
+				</aside>
+			<div id = 'contentWrap'>
+				<div id ='grid'>
+					<section>
+						<h2> Who are we ? </h2>
+						<p> A bunch of energetic people who belive in the value of having friends </p>
+						<p> In a world filled with people with social anxiety and/or lack of social interaction skills, we came in with this idea </p>
+					</section>
+					<section>
+						<img src = '/img/whoarewe.jpg'/>
+					</section>
+					<section>
+						<img src = '/img/stressed.jpeg'>
+					</section>
+					<section>
+						<h2> What is our purpose ? </h2>
+						<p> We intend to help those in need of social interaction skills, by helping them chat with other random users based on their hobbies and interests</p>
+						<p> Friendship.com will help our users practice social interaction, overcome their fears, gain more self trust and even make new friends </p>
+					</section>
+					<section class ='wide'>
+						<h2> How does it actually work ? </h2>
+						<p> Our platform helps users find chat partners </p>
+						<p> Every user with a registered account can fill out information about himself/herself on his/her profile page. The info we are talking about are: hobbies, interesets, passions and other similar stuff.</p>
+						<p> Based on the info that our user has sent, every time he starts using our chat the app will try to match him with the best possible chat partner available(the one with the most shared interests) </p>
+						
+					</section>
+					<section>
+						<h2> Should our users be worried about their safety ?</h2>
+						<p> Simple answer: <b>no</b>. But, there is something to consider: sharing personal information with strangers may lead to unexpected and unwanted results. Our chat platform is meant for anonymous use. We are not accountable for any consequences regarding sharing personal private data with other users on our platform </p>
+					</section>
+					<section>
+						<img src = '/img/hacker.jpg'/>
+					</section>
+					<section class = 'wide'>
+						<h2>What are you waiting for ?</h2>
+						<p>If you feel like our platform can help, you can start right off with a single press of a button</p>
+					</section>
+					<section class = 'wide'>
+						<button class = 'clickMe'> Let's go ! </button>
+					</section>
+				</div>
+			</div>
+			<%- include('../pieces/footer.ejs') %>
 		</div>
-		<div class = 'flex'>
-			<div style='background-color:#aff0c0'>
-				<div class = 'textWrap'>
-					<p> Who are we ? </p>
-					<p> A bunch of creative and energetic guys. </p>
-				</div>
-			</div>
-			<div>
-				<img src = '/img/csstudent.jpg'/>
-			</div>
-
-			<div id ='guyOnBench'>
-				<img src = '/img/sad.jpg' />
-			</div>
-			<div style='background-color:#66b8ff' id = 'whatDoWeWantText'>
-				<div class = 'textWrap'>
-					<p> What do we want ? </p>
-					<p> In a world where we are connected more than ever before, we are also lonelier (paradoxically). Social anxiety is all around us and we want to make a change, so we came up with this idea. We want to make people happy by finding new friends and by socializing. </p>
-				</div>
-			</div>
-
-			<div style='background-color:#ede264'>
-				<div class = 'textWrap'>
-					<p> How are we going to achieve it ? </p>
-					<p> We created this platform to help people with social anxiety to find other people with similar interests and overcome their dificulties when it comes to social interaction.</p>
-				</div>
-			</div>
-			<div>
-				<img src = '/img/lonely.jpg'/>
-			</div>
-
-			<div class = 'joinDiv' >
-				  <div class ='textWrap' >
-				  	<p> So what do you have to do ? </p>
-				  	<a href ="javascript:void(0)"><button class = 'joinButton'> Click here to join us ! </button></a>
-				  	<p class = 'small'> It's all free ! </p>
-				  </div>
-			</div>
-			
-		</div>
-		
-	</div>
-	<%- include('../pieces/footer.ejs') %>
-	</div>
 	
 	
 </body>

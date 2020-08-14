@@ -5,7 +5,7 @@
 	</li>
 
 	<% if(locals.user) { %>
-		<li id = 'drop'> <a href = 'javascript:void(0)'> <i class='fa fa-user-circle' aria-hidden='true'></i> <%=locals.user.username %> </a>
+		<li id = 'drop'> <a href = 'javascript:void(0)' style='display:flex;align-items:center;'> <img id = 'menuProfileImage' src = '' style = 'width:35px;height:35px;border-radius:50%;margin-right:5px;'> <%=locals.user.username %> </a>
 			<ul id = 'drop-menu'>
 				<li><a href = '/profile'> My profile </a> </li>
 				<li><a href = '/logout'> Logout </a> </li>
