@@ -72,6 +72,7 @@ app.post('/registerNewUser',async (req,res)=> {
 					res.send('emailResponse');
 				}
 				catch(error) {
+					console.log('eroare '+error)
 					res.send('error');
 				}
 				
