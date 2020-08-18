@@ -13,7 +13,7 @@ const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const util = require('util');
 const pool = new Pool({
-  connectionString:process.env.DATABASE_URL,
+  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
  
   ssl: {
     rejectUnauthorized: false
@@ -490,7 +490,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: process.env.EMAIL_PASSWORD
+    		pass: 'parola123*'
   		}
 	});
 
