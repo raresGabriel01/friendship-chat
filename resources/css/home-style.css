@@ -61,26 +61,44 @@ div#grid > section > h2 {
 
 
 button.clickMe {
-	position:relative;
-	left:50%;
-	transform:translate(-50%);
-	font-size:1.5rem;
-	padding:14px 16px;
-	border-radius:12px;
-	background-color:tomato;
-	color:white;
-	border:2px solid black;
-	outline:none;
-	transition:0.3s all linear;
+    border-color: #c48c83;
+
+    background-image: linear-gradient(90deg, #c48c83 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+ 
+    transition: all 0.3s linear;
+
+
+    display:block;
+    position:relative;
+    transform:translate(-50%);
+    left:50%;
+
+    
+   
+
+    border-radius:12px;
+    outline:none;
 }
 button.clickMe:hover {
-	background-color:white;
+	background-position: 0;
+	color:white;
 	cursor:pointer;
-	color:tomato;
-	box-shadow:0px 0px 10px 10px tomato;
-	border-color:white;
+}
+button.clickMe:hover > a {
+	color:white;
 }
 
+button.clickMe > a {
+	font-size:1.5rem;
+	transition: 0.3s all linear;
+	 padding:14px 16px;
+	display:block;
+	text-decoration:none;
+	color:#c48c83;
+
+}
 
 
 
@@ -99,33 +117,49 @@ div.banner > div.textWrap {
 	
 	position:absolute;
 	
-	right:0;
-	top:50%;
-	transform:translate(-25%, -50%);
+	left:0;
+	top:25%;
+	transform:translate(0, -25%);
+}
+
+
+div.banner > div.textWrap > img#logo {
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+	max-width:250px;
+	width:30%;
+	
 }
 
 div.banner > div.textWrap > .titleText {
 
 	color:white;
-	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+	
+	
 	
 }
 
 div.banner > div.textWrap > h1 {
+
+
 	font-size:5rem;
+	text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 
 div.banner > div.textWrap > span {
 	font-size:2.5rem;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 
 
 div#pageContainer > aside {
-	padding:60px 5px 60px 5px;
+
+	padding:30px 5px 60px 5px;
 	
 	position:absolute;
-	width:15%;
+	width:20%;
 	
 	border-bottom:1px solid black;
 
@@ -135,29 +169,26 @@ div#pageContainer > aside.left {
 	left:0;
 }
 
-div#pageContainer > aside.right {
-	right:0;
-}
+
 
 div#pageContainer > aside > p {
-	font-size:0.85rem;
+	font-size:0.80rem;
 	text-align:center;
 	margin-top:20px;
 }
 
 div#pageContainer > aside > p.contact {
 	word-break: break-all;
+
 }
 
-div#pageContainer > aside > p#randomQuote {
-	font-style:italic;
-	padding-bottom:60px;
-	border-bottom:1px solid black;
-}
+
 
 div#pageContainer > aside >p.phoneNumber {
 	margin-top:0;
-
+	border-bottom:1px solid black;
+	padding-bottom:60px;
+	margin-bottom:60px;
 }
 
 div#pageContainer > aside > a {
@@ -174,4 +205,54 @@ div#pageContainer > aside > a:visited {
 
 div#pageContainer > aside > a:hover {
 	text-decoration:underline;
+}
+
+
+i.fa-smile-o {
+	font-size:2rem;
+	position:relative;
+	left:50%;
+	transform:translate(-50%);
+}
+
+
+div#contentWrap{
+	left:20%;
+	transform:none;
+}
+
+
+div#contentWrap > p#randomQuote {
+	text-align:center;
+	margin-bottom:60px;
+	font-style:italic;
+	
+}
+
+
+
+@media only screen and (max-width:765px) {
+	h1.mobileTitle {
+		color:white;
+		text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+		font-size:2.5rem;
+		
+	}
+	span.mobileSubtitle {
+		color:white;
+		text-shadow:-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000 ;
+		font-size:1.5rem;
+		
+	}
+
+	.banner {
+		padding:15px 0 0 15px;
+	}
+
+	img#logo {
+		display:block;
+		margin:auto;
+		max-width:120px;
+	}
+
 }

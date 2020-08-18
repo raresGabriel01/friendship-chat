@@ -6,10 +6,11 @@
 </head>
 <body id = 'body'>
 	<div id = 'pageContainer'>
+		<%-include('../pieces/menu.ejs') %>
 		<div id = 'contentWrap'>
-			<%-include('../pieces/menu.ejs') %>
+			
 			<h1> Your account has been succesfully registered ! </h1>
-			<p> Complete your profile <a href = '#'> here </a> </p>
+			<p> Complete your profile <a href = 'javascript:void(0)' onclick = 'displayLoginForm()'> here </a> </p>
 		</div>
 		<%-include('../pieces/footer.ejs')%>
 	</div>

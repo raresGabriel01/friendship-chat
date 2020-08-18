@@ -11,8 +11,9 @@ const { Pool } = require('pg');
 const nodemailer = require('nodemailer');
 const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
+const util = require('util');
 const pool = new Pool({
-  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
+  connectionString:process.env.DATABASE_URL,
  
   ssl: {
     rejectUnauthorized: false
@@ -60,12 +61,12 @@ app.post('/registerNewUser',async (req,res)=> {
 				
 
 				let textLink = "https://friendship-chat.herokuapp.com/confirm/?username="+fields.username;
-				let reportLink = "https://friendship-chat.herokuapp.com/report"
+				
 				let html = '<img style="display:block;margin:auto;width:50%" src ="https://i.pinimg.com/originals/9f/8d/5d/9f8d5d463f7b67c2be23d31791384254.jpg">\
 							<h1 style="text-align:center"> Hello, ' + fields.username  +' !</h1>\
 							<p style="text-align:center;font-size:18px;"> You are just a step away from being able to use our platform </p>\
 							<p style="text-align:center;font-size:18px;"> To confirm your registration, click <a href=\"'+ textLink.toString() + '\"> here </a> </p>\
-							<p style="text-align:center;font-size:18px;"> If you do not remember registering to our website, please report it <a href=\"'+ reportLink.toString() + '\"> here </a> </p>'
+							<p style="text-align:center;font-size:18px;"> If you do not remember registering to our website, please contact us </p>'
 				try {
 					let emailResponse = await sendEmail(fields.email, 'Confirm your registration', html);
 					res.send('emailResponse');
@@ -259,7 +260,7 @@ app.post('/uploadAvatar', async (req, res)=> {
 });
 
 app.get('/getAvatar', async (req, res) => {
-	console.log('help me');
+	
 	//res.sendFile(process.cwd() + '/user_uploads/' + req.session.user.username + '/avatar.jpg', (err) => {
 	//	res.sendFile(process.cwd() + '/resources/img/profile.jpg');
 	//});
@@ -321,6 +322,7 @@ app.get('/*', (req, res) => {	// treating a general request
 var server = app.listen(process.env.PORT || 3000, () => {console.log("App running")});
 
 searchingUsers = {};
+imageOf = {};
 
 var io = socket(server);
 io.on('connection', async (socket) => {
@@ -330,44 +332,62 @@ io.on('connection', async (socket) => {
 	});
 
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
+
   	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
  	_username = decipher.update(_username, 'hex', 'utf-8');
  	_username += decipher.final('utf-8');
+ 	
 
- 	let client = await pool.connect();
-	let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
 
-	if(result.rows.length != 1) {
-		socket.emit('error', {error:'Username not found'});
-	}
-	else {
+	var room = null;
+	socket.on('search',async (data)=>{
 
-	    var room = null;
-	    socket.on('search',(data)=>{
+	 	let client = await pool.connect();
+		let result = await client.query("SELECT * FROM users WHERE username = '" + _username +"';");
+		if(result.rows.length != 1) {
+			socket.emit('error', {error: 'Invalid username'});
+		}
+		else {
+			imageOf[_username] = await getAvatarOf(_username);
+			
 
-	    	searchingUsers[_username] = "nothing"; //to upgrade later;
-	    	var flag = false;
-	    	
-	    	for(let user of Object.keys(searchingUsers)) {
-	    		if(searchingUsers[user] == searchingUsers[_username] && user != _username) {
-	    			
-	    			flag = true;
-	    			socket.join(user);
-	    			room = user;
-	    			socket.to(user).emit('found', {username:_username});
-	    			socket.emit('found', {username:user});
-	    			delete searchingUsers[user];
-	    			delete searchingUsers[_username];
-	    		}
-	    	}
-	    	if(!flag) {
-	    		socket.join(_username);
-	    		room = _username;
-	    	}
-	    });
+
+			searchingUsers[_username] = result.rows[0].hobbies.split(' '); //to upgrade later;
+			
+
+
+
+			var flag = false;
+			    	
+			for(let user of Object.keys(searchingUsers)) {
+				if(  user != _username && searchingUsers[user].filter(hobby => searchingUsers[_username].includes(hobby)).length > 0 ) {
+			    			
+			    	flag = true;
+			    	socket.join(user);
+			    	room = user;
+
+			    	let img1 =  imageOf[user];
+			    	let img2 =  imageOf[_username];
+
+
+
+			    	socket.to(user).emit('found', {username:_username, img:img2});
+			    	socket.emit('found', {username:user, img:img1});
+
+			    	delete searchingUsers[user];
+			    	delete searchingUsers[_username];
+			    		}
+			    }
+			    if(!flag) {
+			    	socket.join(_username);
+			    	room = _username;
+			    }
+		    }
+	});
 
 	    socket.on('message', (data)=> {
-	    	io.in(room).emit('message',{username:_username,message:data.message});
+
+	    	io.in(room).emit('message',{username:_username,message:data.message, img:imageOf[_username]});
 	    });
 
 	    socket.on('disconnect', ()=> {
@@ -376,7 +396,7 @@ io.on('connection', async (socket) => {
 	    	}
 	    	delete searchingUsers[_username];
 	    });
-	}
+	
    	
 
 });
@@ -470,7 +490,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: 'parola123*'
+    		pass: process.env.EMAIL_PASSWORD
   		}
 	});
 
@@ -500,4 +520,18 @@ function stringToObject(string) {
 	}
 
 	return result;
+}
+
+ async function  getAvatarOf(username) {
+	var response;
+	var url = process.cwd() + '/user_uploads/' + username + '/avatar.jpg';
+	const readFile = util.promisify(fs.readFile)
+	try {
+		var base64Image = await readFile(url, 'base64');
+	}catch(err) {
+		return '/img/profile.jpg';
+	}
+	
+	return `data:image/jpeg;base64,${base64Image}`;
+	
 }

@@ -2,10 +2,15 @@
 window.onload = () => {
 	var body = document.getElementById('body');
 	modifyMenu();
-	setAvatarHeight();
+	
 	hobbies();
 	updateHobbyEvents();
 	getAvatar();
+	if(window.innerWidth <= 765) {
+		adaptResponsive();
+	}
+	
+	setAvatarHeight();
 }
 
 
@@ -115,4 +120,12 @@ function getAvatar() {
 function setAvatarHeight() {
 	let profileImage = document.getElementById('profileImage');
 	profileImage.style.height = profileImage.offsetWidth + 'px';
+
+}
+
+function adaptResponsive() {
+	let gridChildren = document.getElementsByClassName('grid')[0].children;
+	for(let gridChild of gridChildren) {
+		gridChild.classList.add('fullRow');
+	}
 }

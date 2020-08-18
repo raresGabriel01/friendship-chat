@@ -2,7 +2,7 @@
 	margin:0;
 	padding:0;
 	font-size:22px;
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	box-sizing: border-box;
 	
 }
@@ -17,10 +17,11 @@ div#pageContainer {
 }
 
 div#contentWrap {
+	min-height:100vh;
 	box-shadow:0px 0px 10px lightgrey;
 	background-color:white;
 	padding:75px 20px 600px 20px;
-	width:70%;
+	width:80%;
 	position:relative;
 	left:50%;
 	transform:translate(-50%);
@@ -52,9 +53,7 @@ div#contentWrap {
 
 
 @media only screen and (max-width:760px) {
-	div#contentWrap {
-		padding-bottom:250px;
-	}
+
 	*{
 		font-size:16px;
 	}

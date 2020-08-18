@@ -105,6 +105,7 @@ div#chatWrap {
 }
 
 div#chatContent {
+	background-color:white;
 	overflow-x: hidden;
 	overflow-y:scroll;
 	position:relative;
@@ -121,7 +122,7 @@ div#chatContent > div.message {
 	padding:12px;
 }
 
-div#chatContent > div.message > p.username {
+div#chatContent > div.message > span.username {
 	color:rgba(115, 176, 200, 0.67);
 }
 
@@ -190,6 +191,8 @@ p.explain {
 
 
 
+
+
 p.match {
 	text-align:center;
 	color:green;
@@ -221,6 +224,18 @@ p.slide {
 @media only screen and (max-width:760px) {
 	.fa-ban {
 		font-size:10rem;
+	}
+	p.title {
+		font-size:1.5rem;
+	}
+	.wide-image {
+		width:100%;
+	}
+	button.startChat {
+		width:50%;
+	}
+	p.subtitle {
+		text-indent:0px;
 	}
 }
 

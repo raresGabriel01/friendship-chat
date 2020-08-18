@@ -11,11 +11,11 @@ pageContainer = document.getElementById('pageContainer');
 	
 	
 socket.on('message', (data)=> {
-	chatContent.innerHTML+="<div class ='message'><p class ='username' id ='lastUsername'></p>\
+	chatContent.innerHTML+="<div class ='message'><img src = "+data.img+" style = 'width:50px;height:50px;border-radius:50%;vertical-align:middle;margin:0px 5px 5px 0px;'><span class ='username' id ='lastUsername'></span>\
 															<p class = 'message' id = 'lastMessage'></p></div>";
 	let lastUsername = document.getElementById('lastUsername');
 	let lastMessage = document.getElementById('lastMessage');
-	lastUsername.innerText = data.username + ':';
+	lastUsername.innerText = data.username + ':';			// work-around so that HTML code cam't be interpreted by chat
 	lastMessage.innerText = data.message;
 	lastUsername.removeAttribute('id');
 	lastMessage.removeAttribute('id');
@@ -33,11 +33,11 @@ socket.on('error', (data) => {
 
 
 socket.on('found', (data) => {
-	pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p></div>';
+	
+	pageContainer.innerHTML = '<div class ="loadWrapper"><p class ="match fall"> Found a pair! </p> <p class = "match slide">'+data.username+'</p><img  style="width:200px;height:200px;display:block;margin:auto;border-radius:50%" src ='+data.img+'></div>';
 	setTimeout(()=>{
 		pageContainer.innerHTML = "	<div class ='contentWrap'><p class = 'title'> Chat here with "+data.username+"</p>\
-		<p class = 'unregistered'> Warning! Once you leave this browser window, you will never be able to come back if you do\
-		not request your partner's friendship ! </p><div id = 'chatWrap'>\
+		<div id = 'chatWrap'>\
 				<div id = 'chatContent'>\
 				</div>\
 				<input type = 'text' id = 'insertMessage' placeholder = 'Type something...'/>\
@@ -47,7 +47,7 @@ socket.on('found', (data) => {
 		let msg = document.getElementById('insertMessage');
 		let sendButton = document.getElementById('sendButton');
 		msg.addEventListener('keydown', function(e) {
-			console.log(this.value);
+			
 			if(e.code == 'Enter') {
 				if(this.value && this.value.trim() != "") {
 					socket.emit('message', { message:this.value});

@@ -18,29 +18,44 @@ body {
   	
 }
 
+
+div#contentWrap {
+	background-image:url('/img/register_blur.jpg');
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+
+}
+
 div.registerForm {
-	position:relative;
-	left:50%;
-	top:50%;
-	transform:translate(-50%);
-	background-color:white;
-	border:3px solid black;
-	border-radius:10%;
-	box-shadow: 0px 0px 40px 2px black;
-	width:80%;
-	margin-top:100px;
-	margin-bottom:100px;
-	padding: 15px;
+    position: relative;
+    left: 50%;
+    /* top: 50%; */
+    transform: translate(-50%,-0%);
+	background-image:url('/img/register.jpg');
+	background-position:center;
+	background-repeat:no-repeat;
+	background-size:cover;
+    border: 1px solid black;
+    width: 80%;
+    border-radius:12px;
+    /* margin-top: 100px; */
+    /* margin-bottom: 100px; */
+    padding: 15px;
 }
 
 div.registerForm > p { 
-	font-size:1.2rem;
+	font-size:1.4rem;
 	text-align:center;
 	margin:10px;
+	color:white;
+	text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 
 div.registerForm > label {
-	
+	font-weight: bold;
+	/*color:#74d420;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;*/
 }
 
 div.registerForm > label > input[type='text'], div.registerForm > label > input[type='password'] {
@@ -49,24 +64,31 @@ div.registerForm > label > input[type='text'], div.registerForm > label > input[
 }
 
 button.submitButton {
-	outline:none;
-	font-size:1.2rem;
-	border:3px solid #6b90ff;
-	background-color:white;
-	color:#6b90ff;
-	position:relative;
-	left:50%;
-	transform:translate(-50%);
-	padding:5px;
-	border-radius:10%;
-	transition:0.5s all linear;
-	margin-top:5px;
+    border-color: #78de62;
+
+    background-image: linear-gradient(90deg, #78de62 50%, transparent 50%);
+    background-position: 100%;
+    background-size: 400%;
+ 
+    transition: all 0.3s linear;
+
+
+    display:block;
+    position:relative;
+    transform:translate(-50%);
+    left:50%;
+
+    padding:14px 16px;
+    color:#78de62;
+
+    border-radius:12px;
+    outline:none;
 }
 
 button.submitButton:hover {
+	background-position: 0;
 	color:white;
-	background-color:#6b90ff;
-	cursor: pointer;
+	cursor:pointer;
 }
 
 span.warning {
@@ -74,10 +96,13 @@ span.warning {
 	font-size:0.8rem;
 	margin-bottom:5px;
 	color:red;
+	font-weight: bold;
+	text-align: left;
 }
 span#submitWarning {
 	margin-top:5px;
 	text-align:center;
+	font-weight: bold;
 }
 
 @media only screen  and (max-width:760px) {

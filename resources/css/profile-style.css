@@ -14,13 +14,19 @@ h1 {
 img#profileImage {
 	display:block;
 	margin:auto;
-	width:100%;
+	width:70%;
+
 	
 	/*border:2px solid black;*/
 	box-shadow:0px 0px 20px black;
 	border-radius:50%;
 }
 
+img#logo {
+	display:block;
+	margin:auto;
+	width:20%;
+}
 
 
 div.wrap {
@@ -61,6 +67,11 @@ div.grid {
 	grid-row-gap: 60px;
 }
 
+.wide {
+	grid-column-start:1;
+	grid-column-end:3;
+}
+
 .fullRow {
 	grid-column:1/3;
 }
@@ -76,6 +87,7 @@ span.hobby {
 	margin-right:5px;
 	border-radius:20%;
 	background-color:#a3ada8;
+	display:inline-block;
 }
 input[type='file']#uploadButton {
 	display:none;
@@ -93,6 +105,7 @@ label#upload {
 	border-radius:12px;
 	transition:0.5s all linear;
 	max-width:80%;
+	overflow:hidden;
 }
 
 label#upload:hover {
@@ -157,4 +170,14 @@ div#addHobbies > button {
 
 div#addHobbies > button:hover {
 	background-color:#f2831d;
+}
+
+@media only screen and (max-width:765px) {
+
+	h1 {
+		margin-bottom:10px;
+	}
+	label#upload {
+		max-width:100%;
+	}
 }

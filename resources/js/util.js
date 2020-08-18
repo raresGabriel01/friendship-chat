@@ -28,7 +28,7 @@ function displayLoginForm() {
 							<span class = 'warning' id ='warning'></span>\
 							<input type='submit' class = 'loginButton' value = 'Submit'/>\
 							<p> Do you have an account? If not, click <a href = '/register'>here</a> </p>\
-							<p>Do you encounter any difficulties logging in? Click <a href = 'javascript:void(0)'>here </a> </p>\
+							<p>Do you encounter any difficulties logging in? Contact us </p>\
 							";
 	if(window.innerWidth <= 760) {
 		loginForm.innerHTML += "<input type='button' class = 'loginButton' onclick = 'goBack()' value ='Go Back'/> ";
