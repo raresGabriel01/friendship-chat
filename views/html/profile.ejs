@@ -30,10 +30,12 @@
 					</div>
 				</section>
 				<section class = 'fullRow' id = 'hobbies'>
+					<% if(locals.hobbies) { %>
 					<% for(let hobby of locals.hobbies) { %>
 						<%if(hobby != '' && hobby.trim() != '') { %>
 						<span class = 'hobby'> <%=hobby%> <i class="fa fa-times-circle" aria-hidden="true"></i></span>
 						<%}%>
+					<%}%>
 					<%}%>
 				</section>
 				<section class ='fullRow'>

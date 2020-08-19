@@ -205,7 +205,11 @@ app.get('/profile', async (req, res) => {
 	if(_user) {
 		let client = await pool.connect();
 		let result = await client.query("SELECT hobbies FROM users WHERE username = '" + _user.username + "';");
-		let _hobbies = result.rows[0].hobbies.split(' ');
+		let hobbies = null;
+		if(result.rows[0].hobbies) {
+			hobbies = result.rows[0].hobbies.split(' ')''
+		}
+		
 		res.render('html/profile', {user:_user, hobbies:_hobbies});
 	}
 	else {
