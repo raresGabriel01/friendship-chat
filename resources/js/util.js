@@ -17,6 +17,7 @@ function displayLoginForm() {
 	loginForm.addEventListener('submit', (e) => {
 		e.preventDefault();
 		submitForm();
+		
 	});
 	loginForm.innerHTML = "<p class ='title'> Login </p>\
 							<label>\
@@ -61,6 +62,7 @@ function submitForm() {
 				switch(this.responseText) {
 					case '1':
 						warning.innerText = 'Unknown username';
+						fillForm();
 						break;
 					case '2':
 						warning.innerText = 'Wrong password';

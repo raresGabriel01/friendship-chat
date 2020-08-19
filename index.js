@@ -13,7 +13,7 @@ const socket = require('socket.io');
 const cookieParser = require("cookie-parser");
 const util = require('util');
 const pool = new Pool({
-  connectionString:'postgres://jtfvnijwgpstem:6f3f079bad7a0c0699927717a211395b4f575f1df4cb53c4ab6dad8be7e146c0@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d7mu443lks4dlk',
+  connectionString:process.env.DATABASE_URL,
  
   ssl: {
     rejectUnauthorized: false
@@ -54,7 +54,7 @@ app.post('/registerNewUser',async (req,res)=> {
 			try {
 				let client = await pool.connect();
 				let cryptedPassword;
-				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',"cryptingpassword");
+				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',process.env.CRYPTING_PASSWORD);
 				cryptedPassword = cryptingAlgorithm.update(fields.password, "utf-8", "hex");
 				cryptedPassword += cryptingAlgorithm.final("hex");
 				await client.query("INSERT INTO waiting_users(username, email, password) VALUES ('" + fields.username +"','"+fields.email+"','"+cryptedPassword+"');");
@@ -95,7 +95,7 @@ app.post('/login', async(req, res) => {
 	form.parse(req, async(err, fields, files) => {
 		let client = await pool.connect();
 		let cryptedPassword;
-		let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',"cryptingpassword");
+		let cryptingAlgorithm=crypto.createCipher('aes-128-cbc',process.env.CRYPTING_PASSWORD);
 		cryptedPassword = cryptingAlgorithm.update(fields.password, "utf-8", "hex");
 		cryptedPassword += cryptingAlgorithm.final("hex");
 
@@ -110,12 +110,12 @@ app.post('/login', async(req, res) => {
 			}
 			else {
 				let cryptedUsername;
-				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc', 'cryptingpassword');
+				let cryptingAlgorithm=crypto.createCipher('aes-128-cbc', process.env.CRYPTING_PASSWORD);
 				cryptedUsername = cryptingAlgorithm.update(fields.username,'utf-8','hex');
 				cryptedUsername += cryptingAlgorithm.final('hex');
 				res.cookie('username', cryptedUsername, {httpOnly:true});
 				req.session.user = {'username':fields.username};
-				res.send('3');
+				res.redirect('/');
 			}
 		}
 	});
@@ -334,7 +334,7 @@ io.on('connection', async (socket) => {
 
   	var _username = stringToObject(socket.handshake.headers.cookie).username;
 
-  	var decipher = crypto.createDecipher('aes-128-cbc', 'cryptingpassword');
+  	var decipher = crypto.createDecipher('aes-128-cbc', process.env.CRYPTING_PASSWORD);
  	_username = decipher.update(_username, 'hex', 'utf-8');
  	_username += decipher.final('utf-8');
  	
@@ -491,7 +491,7 @@ async function sendEmail (_reciever, _subject, _html) {
   		service: 'gmail',
   		auth: {
     		user: 'rares.gabi.web@gmail.com',
-    		pass: 'parola123*'
+    		pass: process.env.EMAIL_PASSWORD
   		}
 	});
 
