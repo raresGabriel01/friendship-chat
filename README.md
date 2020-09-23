@@ -5,6 +5,13 @@ A simple chat app that finds you a chat partner depending on your hobbies/intere
 
 You can access the platform here: https://friendship-chat.herokuapp.com
 
+## How does it work ?
+
+First of all, you'll need to create a new account and confirm your e-mail adress. After that, a profile will be associated with your account and it will be stored in our database. Your profile will include your interests, your username and also a profile picture.
+
+Whenever you start searching for a chat partner, the platform will look for other searching users and will find you a suitable partner depending on how many keywords you have in common with them
+
+
 ## How to use it ?
 Access the platform, create a new account, fill your hobbies on "my profile" section, go to https://friendship-chat.herokuapp.com/chat press 'Start chatting' and you're good to go. The server will search a chat partner for you.
 
