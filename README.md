@@ -18,7 +18,7 @@ Access the platform, create a new account, fill your hobbies on "my profile" sec
 ![image](https://camo.githubusercontent.com/0590f0683ecabf4f50463bdd18e1577bea995d33/68747470733a2f2f692e696d6775722e636f6d2f445566795375332e6a7067)
 
 ## Technologies used:
-  - HTML, CSS, JavaScript (fron-end)
+  - HTML, CSS, JavaScript (front-end)
   - Node.js(back-end)
   - PostgreSQL (database)
 ### Node modules used:
